@@ -1,0 +1,68 @@
+import { connectToPurchasingGroupsDB } from "../../dbConfig/dbConnection.js";
+
+export async function getProducts() {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const products = await db.collection("products").find().toArray();
+        return products;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getProductsByCategory(category) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const products = await db.collection("products").find({ category: category }).toArray();
+        return products;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getProductById(id) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const product = await db.collection("products").findOne({ _id: id });
+        return product;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+export async function addProduct(product) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const result = await db.collection("products").insertOne(product);
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function deleteProduct(id) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const result = await db.collection("products").deleteOne({ _id: id });
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function updateProduct(id, product) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const result = await db.collection("products").updateOne({ _id: id }, { $set: product });
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
