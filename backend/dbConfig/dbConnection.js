@@ -28,4 +28,3 @@ export async function connectToPurchasingGroupsDB() {
     return db;
 }
 
- connectToPurchasingGroupsDB()
