@@ -1,4 +1,4 @@
-import ProductDetailsComponent from "../src/components/product/ProductDetailsComponent";
+import ProductDetailsComponent from "./components/product/Product";
 import './App.css'
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <ProductDetailsComponent />
+      <ProductDetailsComponent id={""}/>
 
     </>
   )
