@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "./ProductDetailsComponent.css";
+import "./Product.css";
 import type { Product } from "../../logic/ProductType";
 import { getProduct } from "../../logic/api/product.api";
 
-export default function ProductDetailsComponent(id_product: string) {
+export default function Product(id_product: string) {
     const [product, setProduct] = useState<Product>({
         id:"",
         imageProduct: "",
@@ -36,7 +36,7 @@ export default function ProductDetailsComponent(id_product: string) {
             }
         }
         fetchGetProduct();
-    }, [product])
+    }, [])
 
     // const [imageProduct, setImageProduct] = useState<string>("objProduct.imageProduct");
     // const [title, setTitle] = useState<string>("objProduct.title");
@@ -57,20 +57,20 @@ export default function ProductDetailsComponent(id_product: string) {
             </section>
 
             <section className="product_details">
-                <div>{objProduct.title}</div>
+                <div>{product.title}</div>
 
                 <div className="divPrice">
 
                     <label htmlFor="">מחיר רגיל</label>
-                    <p>{objProduct.regularPrice}</p>
+                    <p>{product.regularPrice}</p>
                     <label htmlFor="">מחיר קבוצה</label>
-                    <p>{objProduct.groupPrice}</p>
+                    <p>{product.groupPrice}</p>
 
                 </div>
-                <div><p>{objProduct.description}</p></div>
+                <div><p>{product.description}</p></div>
 
                 <label > קטגוריית :</label>
-                <p>{objProduct.category}</p>
+                <p>{product.category}</p>
 
                 <div className="CommentsOrders">
                     {/* יהיה פה קומפוננטה שתיקח את האובייקט של התגובות ו "תמרח" אותו על המסך */}
@@ -80,11 +80,6 @@ export default function ProductDetailsComponent(id_product: string) {
                     <button> הצטרף כעת להזמנה</button>
                     <button> תגובות מוצר מרוכשים</button>
                 </footer>
-
-
-
-
-
 
             </section>
 
