@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
-config();
 import {connectToPurchasingGroupsDB} from './dbConfig/dbConnection.js'
 import userRoutes from './src/routes/usersRouter.js';
+import productsRouter from "./src/routes/productsRouter.js";
+config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,7 +18,10 @@ app.get('/', (req, res) => {
     res.send("hello from the server!");
 });
 
+
 app.use('/users',userRoutes);
+
+app.use("/products", productsRouter);
 
 connectToPurchasingGroupsDB()
 

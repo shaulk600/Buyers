@@ -3,7 +3,7 @@ import {
   getProductById,
   addProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
 } from "../dal/productsDal.js";
 
 // get products
@@ -79,13 +79,13 @@ export async function updateProductById(req, res) {
 
     const result = await updateProduct(productId, product);
 
-    if (!result || result.modifiedCount  === 0) {
+    if (!result || result.modifiedCount === 0) {
       return res.status(404).json({ msg: "Product not found" });
     }
 
     res.status(200).json(result);
   } catch (err) {
-     console.error("Update product error:", err);
+    console.error("Update product error:", err);
     res.status(500).json({ msg: "Server error" });
   }
 }
