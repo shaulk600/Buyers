@@ -4,14 +4,14 @@ import type { Product } from "../../logic/ProductType";
 
 export default function ProductDetailsComponent(objProduct: Product) {
 
-    const [imageProduct, setImageProduct] = useState<string>("objProduct.imageProduct");
-    const [title, setTitle] = useState<string>("objProduct.title");
-    const [description, setDescription] = useState<string>("objProduct.description");
-    const [regularPrice, setRegularPrice] = useState<string>("objProduct.regularPrice");
-    const [groupPrice, setgroupPrice] = useState<string>("objProduct.groupPrice");
-    const [category, setCategory] = useState<string>("objProduct.category");
-    // const [orderd, setOrderd] = useState<string[]>(["objProduct.category"]);
-    const [comments, setComments] = useState<string[]>(["objProduct.category"]);
+    // const [imageProduct, setImageProduct] = useState<string>("objProduct.imageProduct");
+    // const [title, setTitle] = useState<string>("objProduct.title");
+    // const [description, setDescription] = useState<string>("objProduct.description");
+    // const [regularPrice, setRegularPrice] = useState<string>("objProduct.regularPrice");
+    // const [groupPrice, setgroupPrice] = useState<string>("objProduct.groupPrice");
+    // const [category, setCategory] = useState<string>("objProduct.category");
+    // // const [orderd, setOrderd] = useState<string[]>(["objProduct.category"]);
+    // const [comments, setComments] = useState<string[]>(["objProduct.category"]);
 
     return (
         <div id="ProductDetailsPage">
