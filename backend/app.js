@@ -1,12 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
-config();
 import {connectToPurchasingGroupsDB} from './dbConfig/dbConnection.js'
 import userRoutes from './src/routes/usersRouter.js';
 import productsRouter from "./src/routes/productsRouter.js";
-
-
+config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,13 +14,9 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/users',userRoutes);
+app.use('/buyers/users',userRoutes);
 
-app.use("/products", productsRouter);
-
-
-
-connectToPurchasingGroupsDB()
+app.use("/buyers/products", productsRouter);
 
 app.listen(PORT, () => {
     console.log(`server run on http://localhost:3000 >>>`);
