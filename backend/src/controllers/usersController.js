@@ -1,7 +1,7 @@
 import { getAllUsers,getUserById,addUser,deleteUser } from "../dal/usersDal.js";
 
 
-
+// get users
 export async function getAllUsersC(req,res) {
     try{
         const users = await getAllUsers();
@@ -11,7 +11,7 @@ export async function getAllUsersC(req,res) {
     }
 }
 
-
+// get user by id
 export async function getUserByIdC(req,res) {
     try {
         const user = await getUserById(req.params.id);
@@ -22,7 +22,7 @@ export async function getUserByIdC(req,res) {
     }
 }
 
-
+// add user
 export async function addUserC(req,res) {
     try {
         const newUser = await addUser(req.body);
@@ -32,7 +32,7 @@ export async function addUserC(req,res) {
     }
 }
 
-
+// deleted user
 export async function deleteUserC(req,res) {
     try{
         const deleted = await deleteUser(req.params.id);

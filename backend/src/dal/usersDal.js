@@ -13,6 +13,11 @@ export async function getUserById(id) {
     return db.collection("users").findOne({_id:new ObjectId(id)})
 }
 
+export async function getUserByEmail(email) {
+    const db = await connectToPurchasingGroupsDB();
+    return db.collection("users").findOne({email:email})
+}
+
 
 export async function addUser(userData){
     const db = await connectToPurchasingGroupsDB();
