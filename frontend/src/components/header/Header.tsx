@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header id="HeaderComps">
       <div id="logo">
-        <img src="frontend\public\logo-buyers-typographic.svg" alt="our logo" />
+        <img src="/logo-buyers-typographic.svg" alt="our logo" />
       </div>
       <nav>
         <Link to="/page/home">Home</Link>
