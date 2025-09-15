@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import "./Product.css";
 import type { Product } from "../../logic/ProductType";
-import { getProduct } from "../../logic/api/product.api";
+import { getProducts } from "../../logic/api/product.api";
 
-export default function Product(id_product: string) {
+export default function Product({ id_product }: { id_product: string }) {
     const [product, setProduct] = useState<Product>({
-        id:"",
-        imageProduct: "",
+        _id:"",
         title:"",
         description:"",
-        regularPrice:"",
-        groupPrice:"",
+        regular_price:0,
+        group_price:0,
+        image: "",
         category:"",
         orderd:[{}],
         comments:[{id:0, text:""}],
-        quantityCustomers:"",
-        quantityAllCustomers:""
+        quantityCustomers:0,
+        quantityAllCustomers:0
     });
 
     useEffect(() => {
@@ -25,34 +25,27 @@ export default function Product(id_product: string) {
             products = JSON.parse(storage);
         }
         if (products) {
-            const indexProduct = products.findIndex(p => p.id === id_product);
+            const indexProduct = products.findIndex((p: Product) => p._id === id_product);
             const productFound = products[indexProduct];
             setProduct(productFound);
         }
         const fetchGetProduct = async () => {
             if (id_product) {
-                const resProduct = await getProduct(id_product);
+                const resProducts = await getProducts();
+                const findIndex = resProducts.findIndex((p: Product) => p._id === id_product);
+                const resProduct = resProducts[findIndex];
                 setProduct(resProduct);
             }
         }
         fetchGetProduct();
-    }, [])
-
-    // const [imageProduct, setImageProduct] = useState<string>("objProduct.imageProduct");
-    // const [title, setTitle] = useState<string>("objProduct.title");
-    // const [description, setDescription] = useState<string>("objProduct.description");
-    // const [regularPrice, setRegularPrice] = useState<string>("objProduct.regularPrice");
-    // const [groupPrice, setgroupPrice] = useState<string>("objProduct.groupPrice");
-    // const [category, setCategory] = useState<string>("objProduct.category");
-    // // const [orderd, setOrderd] = useState<string[]>(["objProduct.category"]);
-    // const [comments, setComments] = useState<string[]>(["objProduct.category"]);
+    }, []);
 
     return (
         <div id="ProductDetailsPage">
 
             <section className="img_product">
 
-                <img src={product.imageProduct} alt="" />
+                <img src={product.image} alt={`${product.title}-image`} />
 
             </section>
 
@@ -62,9 +55,9 @@ export default function Product(id_product: string) {
                 <div className="divPrice">
 
                     <label htmlFor="">מחיר רגיל</label>
-                    <p>{product.regularPrice}</p>
+                    <p>{product.regular_price}</p>
                     <label htmlFor="">מחיר קבוצה</label>
-                    <p>{product.groupPrice}</p>
+                    <p>{product.group_price}</p>
 
                 </div>
                 <div><p>{product.description}</p></div>
