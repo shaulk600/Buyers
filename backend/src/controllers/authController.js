@@ -1,28 +1,48 @@
-import {registerS} from "../dal/" 
+import {registerU,loginU} from "../utils/authUtils.js" 
 
-export function registerC(req,res){
+// Method post , Given user with {name, email ,password} > try to add user to db  > send {msg:...}
+export async function registerC(req,res){
     try{
     console.log("server get to add a user metod:",req.method);
     const [name,email,password] = req.body
     if (!name,!email,!password){
         res.status(500).json({ msg: "Missing fields" });
     }
-    const id = await registerS(name, email ,password);
-    if (id != -1 && id != -2) {
+    const seccses = await registerU(name, email ,password);
+    if (seccses) {
         console.log("sending "+`user ${name} added succefuly`);
-      res.status(200).send(`user ${name} added succefuly`);
-    }else if(id == -2){
-      console.error("sending: Email already in use");
-        res.status(200).send(`Email already in use`)
-    }else {
+      res.status(200).json({msg:`user ${name} added succefuly`});
+    } else {
        console.error("sending Failed adding user");
-      res.status(500).send(`Failed to add ${name} to users`);
+      res.status(500).json({msg:`Failed to add ${name} to users`});
     }
   } catch (err) {
     console.error("Error adding user", err);
-    res.status(500).send("Server error");
+    res.status(500).json({msg:"Server error"});
   }
-
-
 }
-// loginC
+
+
+// Method post , Given {email, passord},  > return {token} if exsist  if not return {msg}
+export async function loginC(req,res){
+  console.log("server get to connect:",req.body["name"]);
+   try {
+    const { email ,password } = req.body;
+    if (!email || !password) {
+      console.log("sending Invalid input");
+      res.status(400).json({msg:"Invalid input"});
+    }
+    const token = await loginU(email ,password);
+    // console.log(token);
+    if (token) {
+        console.log("sending token");
+      res.status(200).json({success:true,token:token});
+    }else {
+      console.log("sending: samthing is rong with the input");
+      res.status(400).json({success:false,msg:"samthing is rong with the input"});
+    }
+  } catch (err) {
+    console.error("sending Servrt error, The error is", err);
+    res.status(500).json({msg:"server error"});
+  }
+}
