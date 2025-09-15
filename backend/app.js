@@ -17,9 +17,9 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/users',userRoutes);
+app.use('/buyers/users',userRoutes);
 
-app.use("/products", productsRouter);
+app.use("/buyers/products", productsRouter);
 
 connectToPurchasingGroupsDB()
 
