@@ -8,6 +8,7 @@ import productsRouter from "./src/routes/productsRouter.js";
 
 
 
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -19,8 +20,6 @@ app.use(cors());
 app.use('/users',userRoutes);
 
 app.use("/products", productsRouter);
-
-
 
 connectToPurchasingGroupsDB()
 

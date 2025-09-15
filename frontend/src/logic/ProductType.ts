@@ -1,5 +1,9 @@
 export type Product = {
+
+   
+
     id?:string,
+
     imageProduct:string,
     title:string,
     description:string,
@@ -7,7 +11,11 @@ export type Product = {
     groupPrice:string,
     category:string,
     orderd:[{}], ///הוזמנו ומי הזמין
-    comments:[{id:number, text:string}], // מערך תגובות
+
+    comments:[{id:number, text:string}] // מערך תגובות
+
+
+
     quantityCustomers?:string,
     quantityAllCustomers?:string
 }
