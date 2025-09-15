@@ -1,4 +1,4 @@
-import ProductDetailsComponent from "../src/components/product/ProductDetailsComponent";
+import Product from "./components/product/Product";
 import './App.css'
 
 function App() {
@@ -6,8 +6,7 @@ function App() {
 
   return (
     <>
-      <ProductDetailsComponent />
-
+      <Product id_product={"68c6b0abde877421e13a5844"}/>
     </>
   )
 }

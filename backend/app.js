@@ -4,6 +4,9 @@ import { config } from "dotenv";
 config();
 import {connectToPurchasingGroupsDB} from './dbConfig/dbConnection.js'
 import userRoutes from './src/routes/usersRouter.js';
+import productsRouter from "./src/routes/productsRouter.js";
+
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,6 +22,9 @@ app.get('/', (req, res) => {
 
 
 app.use('/users',userRoutes);
+
+app.use("/products", productsRouter);
+
 
 
 connectToPurchasingGroupsDB()
