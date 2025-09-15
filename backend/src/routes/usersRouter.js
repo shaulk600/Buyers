@@ -3,7 +3,7 @@ import express from 'express';
 
 const router = express.Router();
 
-
+// routes for users
 router.get('/',getAllUsersC);
 router.get('/:id',getUserByIdC);
 router.post('/',addUserC);
