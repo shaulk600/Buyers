@@ -14,9 +14,9 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/users',userRoutes);
+app.use('/buyers/users',userRoutes);
 
-app.use("/products", productsRouter);
+app.use("/buyers/products", productsRouter);
 
 app.listen(PORT, () => {
     console.log(`server run on http://localhost:3000 >>>`);
