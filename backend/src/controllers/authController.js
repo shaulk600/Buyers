@@ -1,17 +1,17 @@
 import {registerU,loginU} from "../utils/authUtils.js" 
 
-// Method post , Given user with {name, email ,password} > try to add user to db  > send {msg:...}
+// Method post , Given user with {name, email ,password} > try to add user to db  > return  {msg:..., tolen:...}
 export async function registerC(req,res){
     try{
     console.log("server get to add a user metod:",req.method);
-    const [name,email,password] = req.body
+    const {name,email,password} = req.body
     if (!name,!email,!password){
         res.status(500).json({ msg: "Missing fields" });
     }
     const seccses = await registerU(name, email ,password);
     if (seccses) {
         console.log("sending "+`user ${name} added succefuly`);
-      res.status(200).json({msg:`user ${name} added succefuly`});
+      res.status(200).json({msg:`user ${name} added succefuly`,token:seccses});
     } else {
        console.error("sending Failed adding user");
       res.status(500).json({msg:`Failed to add ${name} to users`});
@@ -23,7 +23,7 @@ export async function registerC(req,res){
 }
 
 
-// Method post , Given {email, passord},  > return {token} if exsist  if not return {msg}
+// Method post , Given {email, passord},  > return {token} if exsist  if not return {msg:..., token:...}
 export async function loginC(req,res){
   console.log("server get to connect:",req.body["name"]);
    try {

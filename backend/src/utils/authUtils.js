@@ -14,10 +14,12 @@ export async function registerU(name,email,password){
         return false
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const result = await addUser(name, email, passwordHash);
+    const result = await addUser({name, email, password:passwordHash});
     if(!result){
     return false;
     }
+    
+    
     const token = loginU(email,password)
     return token;
 }
@@ -25,6 +27,7 @@ export async function registerU(name,email,password){
 // Given email password if email don't exsist or password don't match return false else return token 
 export async function loginU(email,password){
     const user = await getUserByEmail(email);
+    
   if (!user) {
     return false;
   }
