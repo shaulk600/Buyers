@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Product.css";
-import type { Product } from "../../logic/ProductType";
+import type { ProductType } from "../../logic/ProductType";
 import { getProducts } from "../../logic/api/product.api";
 
 export default function Product({ id_product }: { id_product: string }) {
-    const [product, setProduct] = useState<Product>({
+    const [product, setProduct] = useState<ProductType>({
         _id:"",
         title:"",
         description:"",
@@ -25,14 +25,14 @@ export default function Product({ id_product }: { id_product: string }) {
             products = JSON.parse(storage);
         }
         if (products) {
-            const indexProduct = products.findIndex((p: Product) => p._id === id_product);
+            const indexProduct = products.findIndex((p: ProductType) => p._id === id_product);
             const productFound = products[indexProduct];
             setProduct(productFound);
         }
         const fetchGetProduct = async () => {
             if (id_product) {
                 const resProducts = await getProducts();
-                const findIndex = resProducts.findIndex((p: Product) => p._id === id_product);
+                const findIndex = resProducts.findIndex((p: ProductType) => p._id === id_product);
                 const resProduct = resProducts[findIndex];
                 setProduct(resProduct);
             }
