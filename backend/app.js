@@ -16,11 +16,6 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send("hello from the server!");
-});
-
-
 app.use('/users',userRoutes);
 
 app.use("/products", productsRouter);
