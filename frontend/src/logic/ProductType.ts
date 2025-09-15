@@ -1,21 +1,13 @@
 export type Product = {
-
-   
-
-    id?:string,
-
-    imageProduct:string,
+    _id?:string,
     title:string,
     description:string,
-    regularPrice:string,
-    groupPrice:string,
+    regular_price:number,
+    group_price:number,
+    image:string,
     category:string,
     orderd:[{}], ///הוזמנו ומי הזמין
-
-    comments:[{id:number, text:string}] // מערך תגובות
-
-
-
-    quantityCustomers?:string,
-    quantityAllCustomers?:string
+    comments:[{id:number, text:string}], // מערך תגובות
+    quantityCustomers?:number,
+    quantityAllCustomers?:number
 }
