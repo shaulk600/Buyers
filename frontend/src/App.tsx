@@ -1,4 +1,5 @@
-import Product from "./components/product/Product";
+
+
 import './App.css'
 import { useEffect } from "react";
 import { getProducts } from "./logic/api/product.api";
