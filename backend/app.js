@@ -5,6 +5,7 @@ import {connectToPurchasingGroupsDB} from './dbConfig/dbConnection.js'
 import userRoutes from './src/routes/usersRouter.js';
 import productsRouter from "./src/routes/productsRouter.js";
 import access from "./src/routes/authRouter.js";
+import {middleware} from "./src/middleware/middleware.js"
 config();
 
 const PORT = process.env.PORT || 3000;
@@ -17,7 +18,7 @@ app.use(cors());
 
 app.use('/access',access)
 
-// midellwer check token
+app.use('/buyers',middleware)
 
 app.use('/buyers/users',userRoutes);
 

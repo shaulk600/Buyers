@@ -18,7 +18,8 @@ export async function registerU(name,email,password){
     if(!result){
     return false;
     }
-    return loginU(email,password)
+    const token = loginU(email,password)
+    return token;
 }
 
 // Given email password if email don't exsist or password don't match return false else return token 
