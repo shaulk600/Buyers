@@ -1,10 +1,10 @@
-import { getAllUsersC,getUserByIdC,addUserC,deleteUserC } from "../controllers/usersController.js";
+import { registerC, loginC } from "../controllers/authController.js";
 import express from 'express';
 
 const router = express.Router();
 
-router.post('/register',getAllUsersC);
-router.post('/login',login)
+router.post('/register', registerC);
+router.post('/login',loginC)
 
 
 export default router;
