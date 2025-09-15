@@ -1,4 +1,4 @@
-
+import {registerS} from "../dal/" 
 
 export function registerC(req,res){
     try{
@@ -7,7 +7,7 @@ export function registerC(req,res){
     if (!name,!email,!password){
         res.status(500).json({ msg: "Missing fields" });
     }
-    const id = await singUpServices(name, email ,password);
+    const id = await registerS(name, email ,password);
     if (id != -1 && id != -2) {
         console.log("sending "+`user ${name} added succefuly`);
       res.status(200).send(`user ${name} added succefuly`);
