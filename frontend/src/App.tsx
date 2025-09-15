@@ -2,7 +2,7 @@ import './App.css'
 import { useEffect } from "react"
 import { getProducts } from "./logic/api/product.api"
 import Product from './components/product/Product'
-import RoutesPage from './routers/RoutesPage';
+// import RoutesPage from './routers/RoutesPage';
 
 function App() {
 
