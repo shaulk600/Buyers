@@ -1,11 +1,13 @@
-import './App.css'
-import { useEffect } from "react"
-import { getProducts } from "./logic/api/product.api"
-import Product from './components/product/Product'
-import RoutesPage from './routers/RoutesPage';
+import "./App.css";
+import { useEffect } from "react";
+import { getProducts } from "./logic/api/product.api";
+import Product from "./components/product/Product";
+import RoutesPage from "./routers/RoutesPage";
+import HeaderComps from "./components/header/HeaderComps";
+import { BrowserRouter } from "react-router-dom";
+import FooterComps from "./components/footer/FooterComps";
 
 function App() {
-
   useEffect(() => {
     const fetchGetProduct = async () => {
       const resProducts = await getProducts();
@@ -13,16 +15,16 @@ function App() {
       if (!storage) {
         localStorage.setItem("products", JSON.stringify(resProducts));
       }
-    }
+    };
     fetchGetProduct();
   }, []);
 
   return (
-    <>
-      {/* <RoutesPage /> */}
-      <Product id_product={"68c6ba6144c94638c6d0cd88"}/>
-    </>
-  )
+    <BrowserRouter>
+      <HeaderComps />
+      <FooterComps/>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
