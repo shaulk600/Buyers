@@ -26,6 +26,7 @@ export async function getProductById(id) {
     try {
         const db = await connectToPurchasingGroupsDB();
         const product = await db.collection("products").findOne({ _id: id });
+        console.log(db.collection("products"));
         console.log(product);
         return product;
     } catch (error) {
