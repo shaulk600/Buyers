@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { connectToPurchasingGroupsDB } from "../../dbConfig/dbConnection.js";
 
 export async function getProducts() {
@@ -25,9 +26,7 @@ export async function getProductsByCategory(category) {
 export async function getProductById(id) {
     try {
         const db = await connectToPurchasingGroupsDB();
-        const product = await db.collection("products").findOne({ _id: id });
-        console.log(db.collection("products"));
-        console.log(product);
+        const product = await db.collection("products").findOne({ _id: new ObjectId(id) });
         return product;
     } catch (error) {
         console.error(error);
@@ -50,7 +49,7 @@ export async function addProduct(product) {
 export async function deleteProduct(id) {
     try {
         const db = await connectToPurchasingGroupsDB();
-        const result = await db.collection("products").deleteOne({ _id: id });
+        const result = await db.collection("products").deleteOne({ _id: new ObjectId(id) });
         return result;
     } catch (error) {
         console.error(error);
@@ -61,7 +60,7 @@ export async function deleteProduct(id) {
 export async function updateProduct(id, product) {
     try {
         const db = await connectToPurchasingGroupsDB();
-        const result = await db.collection("products").updateOne({ _id: id }, { $set: product });
+        const result = await db.collection("products").updateOne({ _id: new ObjectId(id) }, { $set: product });
         return result;
     } catch (error) {
         console.error(error);
