@@ -40,7 +40,7 @@ export default function LoginComps() {
 
     const getUserFromServer = async (myToken: string) => {
         try {
-            const res = await fetch(`http://localhost:3000//buyers/users/data`, {
+            const res = await fetch(`http://localhost:3000/buyers/users/data`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
