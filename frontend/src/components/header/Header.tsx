@@ -1,7 +1,11 @@
 import { Link } from "react-router";
 import './Header.css';
+import { UserContext } from '../../context/UserContext'
+import { useContext } from "react";
 
 export default function Header() {
+  const user = useContext(UserContext);
+
   return (
     <header id="HeaderComps">
       <Link to="/home">
@@ -10,11 +14,17 @@ export default function Header() {
       <nav>
         <Link to="/home">Home</Link>
         <Link to="/products">Products</Link>
-        <Link to="/signIn">Sign In</Link>
-        <Link to="/signUp">Sign Up</Link>
-        <Link to="/cart">Cart</Link>
-        <Link to="/profile">My Profile</Link>
       </nav>
+        {
+          user ? (
+            <span className="btn">
+            <Link to="/signIn"><button>Sign In</button></Link>
+            <Link to="/signUp"><button>Sign Up</button></Link>
+            </span>
+          ) : (
+            <Link to="/profile">My Profile</Link>
+          )
+        }
     </header>
   );
 }

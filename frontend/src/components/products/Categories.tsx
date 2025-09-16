@@ -5,7 +5,7 @@ type CategoriesProps = {
 };
 
 export default function Categories({ onSelectCategory }: CategoriesProps) {
-  const categories = ["All", "Kitchen", "Electronics", "Furniture", "Computers"];
+  const categories = ["All"];
   const [selected, setSelected] = useState("All");
 
   const handleSelect = (category: string) => {
