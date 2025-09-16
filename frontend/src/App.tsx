@@ -22,8 +22,6 @@ function App() {
 
   return (
     <>
-      <RegisterPage />
-      <LoginPage />
       <Header />
       {/* <ProductsPage /> */}
       <Footer />
