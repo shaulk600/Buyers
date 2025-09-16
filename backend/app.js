@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import { connectToPurchasingGroupsDB } from './dbConfig/dbConnection.js'
 import userRoutes from './src/routes/usersRouter.js';
 import productsRouter from "./src/routes/productsRouter.js";
+import companyRouter from './src//routes/companiesRouter.js';
 import access from "./src/routes/authRouter.js";
 import { middleware } from "./src/middleware/middleware.js"
 import productsRouterToken from "./src/routes/productsRouter.t.js"
@@ -24,6 +25,7 @@ app.use("/buyers/products", productsRouter);
 app.use('/buyers', middleware)
 
 app.use('/buyers/users', userRoutes);
+app.use('/buyers/companies',companyRouter)
 
 app.use('/buyers/token/products',productsRouterToken)
 
