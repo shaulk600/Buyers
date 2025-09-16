@@ -6,110 +6,96 @@ export default function LoginComps() {
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
 
-    const [result, setResult] = useState(null);
-    const [token, setToken] = useState(null);
+    const [result, setResult] = useState<any>(null);
+    const [token, setToken] = useState<string | null>(null);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        try {
+            const res = await fetch(`http://localhost:3000/access/login`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password, name })
+            });
 
-        const res = await fetch(`http://localhost:3000/access/login`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: email, password: password, name: name })
-        })
-        setResult(await res.json());
-    }
-    const sendToken = () => { //חייב להגיע אחרי ה fetch
-        if (result) {
-            const myToken: string = result['token'];
-            localStorage.setItem('BuyersAccessToken', myToken);
+            const data = await res.json();
+            setResult(data);
+        } catch (err) {
+            console.error("Login error function handleSubmit:", err);
+            setResult({ error: "Server error, please try again" });
         }
-    }
-    const isToken = () => {
-        let myToken = null;
-        myToken = localStorage.getItem('BuyersAccessToken');
-        if (myToken) {
-            return myToken;
-        }
-        return null;
     }
 
     useEffect(() => {
+        // שמירת טוקן אחרי login
+        if (result?.token) {
+            localStorage.setItem('BuyersAccessToken', result.token);
+            setToken(result.token);
+        }
+    }, [result]);
 
-    }, [])
-
+    useEffect(() => {
+        // בדיקה אם כבר יש token שמור
+        const savedToken = localStorage.getItem("BuyersAccessToken");
+        if (savedToken) {
+            setToken(savedToken);
+        }
+    }, []);
 
     return (
-        <div className=''>
-            <h2 className=''> Welcome Back </h2>
+        <div>
+            <h2>Welcome Back</h2>
 
             <div id='loginContext'>
-
-                <form onSubmit={handleSubmit} className="">
-
+                <form onSubmit={handleSubmit}>
                     <div>
-                        <label className=''> Name: </label>
-
-                        <div>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                placeholder="full name"
-                                className=''
-                            />
-                        </div>
-
+                        <label>Name:</label>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="full name"
+                            required
+                        />
                     </div>
 
                     <br />
 
                     <div>
-                        <label className=''> Password </label>
-                        <div className='inputLogin'>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPass(e.target.value)}
-                                required
-                                placeholder="••••••••"
-                                className=''
-                            />
-                        </div>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPass(e.target.value)}
+                            placeholder="••••••••"
+                            required
+                        />
                     </div>
 
                     <br />
 
                     <div>
-                        <label className=''> Email </label>
-                        <div className='inputLogin'>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="you@example.com"
-
-                                className=""
-                            />
-                        </div>
-
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="you@example.com"
+                            required
+                        />
                     </div>
-                    <button
-                        type='submit'
-                        className=''
-                    >
-                        Sign In
-                    </button>
 
+                    <button type='submit'>Sign In</button>
                 </form>
             </div>
-            <div>
-                <div id='resonse'>{result}</div>
+
+            <div id='response'>
+                {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
             </div>
+
+            {token && <p>Token saved: {token}</p>}
         </div>
     )
 }

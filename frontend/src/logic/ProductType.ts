@@ -1,4 +1,4 @@
-import type { User } from "./UserType"
+import type { UserType } from "./UserType"
 
 export type ProductType = {
     _id:string,
@@ -8,7 +8,7 @@ export type ProductType = {
     group_price:number,
     image:string,
     category:string,
-    orderd:User[], ///הוזמנו ומי הזמין
+    orderd:UserType[], ///הוזמנו ומי הזמין
     comments:[{id:number, text:string}], // מערך תגובות
     quantityCustomers:number,
     quantityAllCustomers:number

@@ -1,20 +1,20 @@
-/* עיצוב כרטיס */
+עיצוב כרטיס
 /* קונטיינר לכרטיס תשלום */
-.card-payment-box {
+/* .card-payment-box {
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
-}
-
+} */
+/* 
 .card-payment-box:hover {
     transform: scale(1.02);
-}
+} */
 
 /* שורת תוקף+CVV */
-.exp-cvv-row {
+/* .exp-cvv-row {
     display: flex;
     gap: 12px;
     margin-top: 10px;
@@ -22,29 +22,29 @@
 
 .exp-cvv-row div {
     flex: 1;
-}
+} */
 
 /* אייקוני כרטיסים */
-.card-icons {
+/* .card-icons {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 15px;
-}
+} */
 
-.card-icons img {
+/* .card-icons img {
     width: 40px;
     height: auto;
     opacity: 0.8;
     transition: opacity 0.2s;
-}
+} */
 
-.card-icons img:hover {
+/* .card-icons img:hover {
     opacity: 1;
-}
+} */
 
 /* קלטים */
-.input-btn {
+/* .input-btn {
     width: 100%;
     padding: 10px;
     margin-top: 6px;
@@ -54,9 +54,9 @@
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s;
-}
+} */
 
-.input-btn:focus {
+/* .input-btn:focus {
     border-color: #0077ff;
     box-shadow: 0 0 5px rgba(0, 119, 255, 0.4);
-}
+} */

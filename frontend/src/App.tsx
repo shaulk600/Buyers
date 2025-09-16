@@ -11,8 +11,7 @@ import SignUpPage from "./pages/signUp/signUpPage";
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
-
-        
+    
 function App() {
   useEffect(() => {
     const fetchGetProduct = async () => {
