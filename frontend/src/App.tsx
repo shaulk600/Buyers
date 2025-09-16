@@ -11,7 +11,9 @@ import SignUpPage from "./pages/signUp/signUpPage";
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
-    
+import UserProfilePage from "./pages/profile/UserProfilePage";
+import { UserProvider } from "./context/UserContext";
+        
 function App() {
   useEffect(() => {
     const fetchGetProduct = async () => {
@@ -26,6 +28,7 @@ function App() {
 
   return (
     <>
+    <UserProvider>
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />}></Route>
@@ -35,8 +38,10 @@ function App() {
         <Route path="/cart" element={<CartPage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
         <Route path="/contactUs" element={<ContactUsPage />}></Route>
+        <Route path="/profile" element={<UserProfilePage/>}></Route>
       </Routes>
       <Footer />
+      </UserProvider>
     </>
   );
 }

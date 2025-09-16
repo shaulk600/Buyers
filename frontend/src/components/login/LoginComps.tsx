@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import "./LoginComps.css";
 
 export default function LoginComps() {
-    const [name, setName] = useState<string>("");
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
 
@@ -17,7 +16,7 @@ export default function LoginComps() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password, name })
+                body: JSON.stringify({ email, password })
             });
 
             const data = await res.json();
@@ -50,13 +49,14 @@ export default function LoginComps() {
 
             <div id='loginContext'>
                 <form onSubmit={handleSubmit}>
+
                     <div>
-                        <label>Name:</label>
+                        <label>Email:</label>
                         <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="full name"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="you@example.com"
                             required
                         />
                     </div>
@@ -74,20 +74,8 @@ export default function LoginComps() {
                         />
                     </div>
 
-                    <br />
-
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="you@example.com"
-                            required
-                        />
-                    </div>
-
                     <button type='submit'>Sign In</button>
+
                 </form>
             </div>
 

@@ -20,7 +20,7 @@ export default function Product({ id_product }: { id_product: string }) {
     });
 
     const [ isOrdered, setIsOrdered ] = useState(false);
-    
+
     useEffect(() => {
         const storage = localStorage.getItem("products");
         let products;
@@ -44,7 +44,7 @@ export default function Product({ id_product }: { id_product: string }) {
     }, []);
 
     const addUserToProduct = async () => {
-        const user: UserType = { name: "John", password: "123", email: "john@email.com" };
+        const user: UserType = { password: "123", email: "john@email.com" };
         console.log("1",product);
         setProduct((product) => ({
             ...product, orderd: [...(product.orderd || []), user]
@@ -60,7 +60,7 @@ export default function Product({ id_product }: { id_product: string }) {
     }
 
     const removeUserFromProduct = async () => {
-        const user: UserType = { name: "John", password: "123", email: "john@email.com" };
+        const user: UserType = { password: "123", email: "john@email.com" };
         setProduct((product) => ({
             ...product, orderd: (product.orderd || []).filter((u) => u.email !== user.email)
         }));
