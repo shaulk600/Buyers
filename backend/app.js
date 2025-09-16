@@ -27,6 +27,8 @@ app.use('/buyers/users',userRoutes);
 
 app.use('/buyers/token/products',productsRouterToken)
 
+connectToPurchasingGroupsDB();
+
 app.listen(PORT, () => {
     console.log(`server run on http://localhost:3000 >>>`);
 });

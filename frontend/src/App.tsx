@@ -1,11 +1,19 @@
-import './App.css'
-import { useEffect } from "react"
-import { getProducts } from "./logic/api/product.api"
-import Product from './components/product/Product'
-import RoutesPage from './routers/RoutesPage';
+import "./App.css";
+import { useEffect } from "react";
+import { getProducts } from "./logic/api/product.api";
+import Header from "./components/header/Header";
+import ProductsPage from "./pages/productsPage/ProductsPage";
+import Footer from "./components/footer/Footer";
+import { Route, Routes } from "react-router";
+import LoginPage from "./pages/login/LoginPage";
+import HomePage from "./pages/home/homePage";
+import SignUpPage from "./pages/signUp/signUpPage";
+import CartPage from "./pages/cart/cartPage";
+import AboutPage from "./pages/about/aboutPage";
+import ContactUsPage from "./pages/contactUs/contactUsPage";
 
+        
 function App() {
-
   useEffect(() => {
     const fetchGetProduct = async () => {
       const resProducts = await getProducts();
@@ -13,16 +21,25 @@ function App() {
       if (!storage) {
         localStorage.setItem("products", JSON.stringify(resProducts));
       }
-    }
+    };
     fetchGetProduct();
   }, []);
 
   return (
     <>
-      {/* <RoutesPage /> */}
-      <Product id_product={"68c6ba6144c94638c6d0cd88"}/>
+      <Header />
+      <Routes>
+        <Route path="/home" element={<HomePage />}></Route>
+        <Route path="/signUp" element={<SignUpPage />}></Route>
+        <Route path="/signIn" element={<LoginPage />}></Route>
+        <Route path="/products" element={<ProductsPage />}></Route>
+        <Route path="/cart" element={<CartPage />}></Route>
+        <Route path="/about" element={<AboutPage />}></Route>
+        <Route path="/contactUs" element={<ContactUsPage />}></Route>
+      </Routes>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
