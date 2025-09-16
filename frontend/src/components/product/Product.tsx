@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Product.css";
 import type { ProductType } from "../../logic/ProductType";
-import { getProducts, updateProduct } from "../../logic/api/product.api";
+import { getProducts } from "../../logic/api/product.api";
 import type { UserType } from "../../logic/UserType";
 
 export default function Product({ id_product }: { id_product: string }) {
