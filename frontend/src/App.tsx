@@ -9,6 +9,10 @@ import Footer from "./components/footer/Footer";
 import ProductsPage from "./pages/productsPage/ProductsPage";
 
 import HomePage from "./pages/home/homePage";
+
+import RegisterPage from "./pages/register/RegisterPage";
+
+
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
@@ -19,7 +23,7 @@ import UserProfilePage from "./pages/profile/UserProfilePage";
 import { Route, Routes } from "react-router";
 import { UserProvider } from "./context/UserContext";
 import type { ProductType } from "./logic/ProductType";
-import RegisterPage from "./pages/register/RegisterPage";
+
 
         
 function App() {
@@ -40,7 +44,11 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={<RegisterPage />}></Route>
+
+        <Route path="/signUp" element={< RegisterPage/>}></Route>
+
+        
+
         <Route path="/signIn" element={<LoginPage />}></Route>
         <Route path="/products" element={<ProductsPage products={products} setProducts={setProducts}/>}></Route>
         <Route path="/cart" element={<CartPage />}></Route>
