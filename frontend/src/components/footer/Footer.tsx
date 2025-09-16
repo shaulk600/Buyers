@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-export default function FooterComps() {
+export default function Footer() {
   return (
     <div>
       <nav>

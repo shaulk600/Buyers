@@ -1,5 +1,5 @@
-export type Product = {
-    _id?:string,
+export type ProductType = {
+    _id:string,
     title:string,
     description:string,
     regular_price:number,
@@ -8,6 +8,6 @@ export type Product = {
     category:string,
     orderd:[{}], ///הוזמנו ומי הזמין
     comments:[{id:number, text:string}], // מערך תגובות
-    quantityCustomers?:number,
-    quantityAllCustomers?:number
+    quantityCustomers:number,
+    quantityAllCustomers:number
 }
