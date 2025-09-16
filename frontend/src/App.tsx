@@ -7,7 +7,7 @@ import Footer from "./components/footer/Footer";
 import { Route, Routes } from "react-router";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/homePage";
-import SignUpPage from "./pages/signUp/signUpPage";
+// import SignUpPage from "./pages/signUp/signUpPage";
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
@@ -26,6 +26,7 @@ function App() {
       setProducts(resProducts);
     };
     fetchGetProduct();
+    console.log(products);
   }, []);
 
   return (

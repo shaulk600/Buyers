@@ -1,7 +1,6 @@
 export type UserType = {
     password: string,
-    email: string,
-    name: string
+    email: string
 }
 export type UserRegister = {
     id?: number

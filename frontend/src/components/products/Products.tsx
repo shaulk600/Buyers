@@ -32,7 +32,7 @@ export default function Products({ category, products, setProducts }: Props) {
     <div className="comp-products">
         {
             products.map(product => (
-                <Product id_product={product._id}/>
+                <Product id_product={product._id} key={product._id}/>
             ))
         }
         <div>

@@ -17,7 +17,7 @@ export async function getAllUsersC(req,res) {
 // get user by email
 export async function getUsersC(req,res){
      try {
-        const email = req.user[email]
+        const email = req.user["email"]        
         const user = await getUserByEmail(email);
         delete user.password;
         if (!user) return res.status(404).json({ error: "User not found" });
