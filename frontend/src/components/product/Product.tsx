@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Product.css";
 import type { ProductType } from "../../logic/ProductType";
-import { getProducts } from "../../logic/api/product.api";
+import { getProducts, updateProduct } from "../../logic/api/product.api";
 import type { User } from "../../logic/UserType";
 
 export default function Product({ id_product }: { id_product: string }) {
@@ -21,20 +21,22 @@ export default function Product({ id_product }: { id_product: string }) {
 
     const [ isOrdered, setIsOrdered ] = useState(false);
 
-    const addUserToProduct = () => {
+    const addUserToProduct = async () => {
         const user: User = { name: "John", password: "123", email: "john@email.com" };
         // setProduct((product) => ({
         //     ...product, orderd: [...product.orderd, user]
         // }));
+        // const result = await updateProduct(product._id, product);
         setIsOrdered(true);
         console.log(isOrdered);
     }
 
-    const removeUserFromProduct = () => {
+    const removeUserFromProduct = async () => {
         const user: User = { name: "John", password: "123", email: "john@email.com" };
         // setProduct((product) => ({
         //     ...product, orderd: product.orderd.filter((u) => u.email !== user.email)
         // }));
+        // const result = await updateProduct(product._id, product);
         setIsOrdered(false);
     }
 
