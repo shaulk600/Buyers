@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 export async function middleware(req,res,next){
      try {
     const token = req.headers["authorization"];
-    if (!authHeader) {
+    if (!token) {
       return res.status(401).json({ msg: "No token provided" });
     }
     const decoded = jwt.verify(token, JWT_SECRET);
