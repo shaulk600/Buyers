@@ -8,11 +8,11 @@ export default function Header() {
         <img id="logo-img" src="/logo-buyers-typographic.svg" alt="logo-buyers" />
       </Link>
       <nav>
-        <Link to="/page/home">Home</Link>
-        <Link to="/page/products">Products</Link>
-        <Link to="/page/signIn">Sign In</Link>
-        <Link to="/page/signUp">Sign Up</Link>
-        <Link to="/page/cart">Cart</Link>
+        <Link to="/home">Home</Link>
+        <Link to="/products">Products</Link>
+        <Link to="/signIn">Sign In</Link>
+        <Link to="/signUp">Sign Up</Link>
+        <Link to="/cart">Cart</Link>
       </nav>
     </header>
   );
