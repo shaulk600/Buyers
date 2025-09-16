@@ -13,6 +13,8 @@ import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
 import UserProfilePage from "./pages/profile/UserProfilePage";
 import { UserProvider } from "./context/UserContext";
+// import RegisterComps from "./components/register/RegisterComps";
+import RegisterPage from "./pages/register/RegisterPage";
         
 function App() {
   useEffect(() => {
@@ -32,7 +34,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={<SignUpPage />}></Route>
+        <Route path="/signUp" element={<RegisterPage />}></Route>
         <Route path="/signIn" element={<LoginPage />}></Route>
         <Route path="/products" element={<ProductsPage />}></Route>
         <Route path="/cart" element={<CartPage />}></Route>
