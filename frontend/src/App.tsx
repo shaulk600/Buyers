@@ -1,8 +1,9 @@
 import './App.css'
 import { useEffect } from "react"
 import { getProducts } from "./logic/api/product.api"
-import Product from './components/product/Product'
-import RoutesPage from './routers/RoutesPage';
+import Header from './components/header/Header'
+import ProductsPage from './pages/productsPage/ProductsPage'
+import Footer from './components/footer/footer'
 
 function App() {
 
@@ -18,12 +19,10 @@ function App() {
   }, []);
 
   return (
-    <>
-      
-      
-      
-      <RoutesPage />
-      <Product id_product={"68c6ba6144c94638c6d0cd88"}/>
+    <>   
+      <Header/>
+      <ProductsPage/>
+      <Footer/>
     </>
   )
 }
