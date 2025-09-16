@@ -13,6 +13,7 @@ export default function Header() {
         <Link to="/signIn">Sign In</Link>
         <Link to="/signUp">Sign Up</Link>
         <Link to="/cart">Cart</Link>
+        <Link to="/profile">My Profile</Link>
       </nav>
     </header>
   );
