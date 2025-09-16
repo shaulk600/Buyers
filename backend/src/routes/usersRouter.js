@@ -1,10 +1,11 @@
-import { getAllUsersC,getUserByIdC,addUserC,deleteUserC } from "../controllers/usersController.js";
+import { getAllUsersC,getUsersC,getUserByIdC,addUserC,deleteUserC } from "../controllers/usersController.js";
 import express from 'express';
 
 const router = express.Router();
 
 // routes for users
-router.get('/',getAllUsersC);
+// router.get('/',getAllUsersC);
+router.get('/data',getUsersC);
 router.get('/:id',getUserByIdC);
 router.post('/',addUserC);
 router.delete('/:id',deleteUserC);
