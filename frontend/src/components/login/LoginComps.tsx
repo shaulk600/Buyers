@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react'
+import { useUser } from "../../context/UserContext";
 import "./LoginComps.css";
 
 export default function LoginComps() {
+    const { setUser } = useUser(); // שימוש ב-context
+
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
 
     const [result, setResult] = useState<any>(null);
     const [token, setToken] = useState<string | null>(null);
+
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -21,27 +25,60 @@ export default function LoginComps() {
 
             const data = await res.json();
             setResult(data);
+
+            // שמירת token אם קיים
+            if (data?.token) {
+                localStorage.setItem("BuyersAccessToken", data.token);
+                setToken(data.token);
+            }
         } catch (err) {
             console.error("Login error function handleSubmit:", err);
             setResult({ error: "Server error, please try again" });
         }
     }
 
-    useEffect(() => {
-        // שמירת טוקן אחרי login
-        if (result?.token) {
-            localStorage.setItem('BuyersAccessToken', result.token);
-            setToken(result.token);
+
+    const getUserFromServer = async (myToken: string) => {
+        try {
+            const res = await fetch(`http://localhost:3000/buyers/users/data`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": myToken,
+                },
+            });
+
+            const data = await res.json();
+            if (data.user) {
+                console.log(data.user)
+                // הכנסת המשתמש ל־context
+                setUser({
+                    ...data.user,
+                    orders: data.orders || [],
+                    groups: data.groups || [],
+                });
+            }
+
+        } catch (err) {
+            console.log('error function getUserFromServer: ', err);
         }
-    }, [result]);
+    }
 
     useEffect(() => {
-        // בדיקה אם כבר יש token שמור
+        if (token) {
+            getUserFromServer(token);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        // בדיקה אם כבר יש token 
         const savedToken = localStorage.getItem("BuyersAccessToken");
         if (savedToken) {
             setToken(savedToken);
         }
     }, []);
+
+
 
     return (
         <div>

@@ -17,8 +17,8 @@ export type Group = {
 };
 
 export type UserFull = UserRegister & {
-  orders: Order[];
-  groups: Group[];
+  orders: Order[]; // הזמנות
+  groups: Group[]; // קבוצות רכישה
 };
 
 type UserContextType = {

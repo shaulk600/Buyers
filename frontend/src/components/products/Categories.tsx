@@ -2,10 +2,10 @@ import { useState } from "react";
 
 type CategoriesProps = {
   onSelectCategory: (cat: string) => void;
+  categories: string[];
 };
 
-export default function Categories({ onSelectCategory }: CategoriesProps) {
-  const categories = ["All"];
+export default function Categories({ onSelectCategory, categories }: CategoriesProps) {
   const [selected, setSelected] = useState("All");
 
   const handleSelect = (category: string) => {

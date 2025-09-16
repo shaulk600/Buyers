@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Product.css";
 import type { ProductType } from "../../logic/ProductType";
-import { getProducts, updateProduct } from "../../logic/api/product.api";
-import type { UserType } from "../../logic/UserType";
+import { getProducts } from "../../logic/api/product.api";
+import { updateProduct } from "../../logic/api/product.api";
+import { UserContext } from "../../context/UserContext"; 
 
 export default function Product({ id_product }: { id_product: string }) {
     const [product, setProduct] = useState<ProductType>({
@@ -18,7 +19,8 @@ export default function Product({ id_product }: { id_product: string }) {
         quantityCustomers:0,
         quantityAllCustomers:0
     });
-
+    const userUseContext = useContext(UserContext);
+    console.log(userUseContext);
     const [ isOrdered, setIsOrdered ] = useState(false);
 
     useEffect(() => {
@@ -44,31 +46,58 @@ export default function Product({ id_product }: { id_product: string }) {
     }, []);
 
     const addUserToProduct = async () => {
-        const user: UserType = { password: "123", email: "john@email.com" };
-        console.log("1",product);
-        setProduct((product) => ({
-            ...product, orderd: [...(product.orderd || []), user]
-        }));
-        console.log(product._id);
-        console.log(id_product);
-        const result = await updateProduct(id_product, product);
-        console.log("res",result);
-        if (result) {
-            setIsOrdered(true);
-        }
-        console.log(isOrdered);
+    if (!userUseContext?.user) {
+        window.location.href = "/signIn";
+        return;
     }
 
-    const removeUserFromProduct = async () => {
-        const user: UserType = { password: "123", email: "john@email.com" };
-        setProduct((product) => ({
-            ...product, orderd: (product.orderd || []).filter((u) => u.email !== user.email)
-        }));
-        const result = await updateProduct(product._id, product);
-        if (result) {
-            setIsOrdered(false);
-        }
+    const updatedProduct: ProductType = {
+        ...product,
+        orderd: [...(product.orderd || []), userUseContext.user],
+    };
+
+    setProduct(updatedProduct);
+    setIsOrdered(true);
+
+    try {
+        await updateProduct(updatedProduct._id, updatedProduct);
+    } catch (err) {
+        console.error("Error updating product:", err);
     }
+    };
+
+    const removeUserFromProduct = async () => {
+    if (!userUseContext?.user?.email) return;
+
+    const updatedProduct: ProductType = {
+        ...product,
+        orderd: (product.orderd || []).filter(
+        (u) => u.email !== userUseContext.user.email
+        ),
+    };
+
+    setProduct(updatedProduct);
+    setIsOrdered(false);
+
+    try {
+        await updateProduct(updatedProduct._id, updatedProduct);
+    } catch (err) {
+        console.error("Error updating product:", err);
+    }
+    };
+
+    // בדיקה אם המשתמש כבר הצטרף
+    useEffect(() => {
+    if (
+        userUseContext?.user &&
+        product.orderd?.some((u) => u.email === userUseContext.user.email)
+    ) {
+        setIsOrdered(true);
+    } else {
+        setIsOrdered(false);
+    }
+    }, [product, userUseContext]);
+
 
     return (
         <div id="ProductDetailsPage">
