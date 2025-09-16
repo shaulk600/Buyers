@@ -5,6 +5,7 @@ import Product from "../product/Product";
 
 export default function Products({ category }: { category: string }) {
     const [products, setProducts] = useState<ProductType[]>([]);
+    const [searchTerm, setSearchTerm] = useState("")
     console.log(category);
     console.log(products);
     
@@ -39,6 +40,10 @@ export default function Products({ category }: { category: string }) {
     fetchGetProduct();
     }, [category]);
 
+    const filteredProducts = products.filter((f)=>{
+        f.title.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+
   return (
     <div className="comp-products">
         {
@@ -46,6 +51,16 @@ export default function Products({ category }: { category: string }) {
                 <Product id_product={product._id}/>
             ))
         }
+        <div>
+            <input
+        type="text"
+        placeholder="Search product..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button >Search</button>
+        </div>
+        
     </div>
   )
 }
