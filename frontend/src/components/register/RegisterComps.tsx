@@ -27,7 +27,7 @@ export default function RegisterComps() {
             cvv: formData.get("cvv") as string,
         };
 
-        if (validTypeUserRegister(newUser)) {
+        // if (validTypeUserRegister(newUser)) {
             try {
                 const res = await fetch("http://localhost:3000/access/register", {
                     method: "POST",
@@ -50,9 +50,9 @@ export default function RegisterComps() {
                 console.error("Error function createUser:", err);
                 window.alert("❌ Server error, please try again later");
             }
-        } else {
-            window.alert("❌ Invalid data");
-        }
+        // } else {
+        //     window.alert("❌ Invalid data");
+        // }
     };
 
     return (
