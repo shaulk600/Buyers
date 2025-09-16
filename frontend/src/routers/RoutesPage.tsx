@@ -18,7 +18,7 @@ export default function RoutesPage() {
                 <UserContext.Provider value={user || null}>
 
                     {/* Home */}
-                    <Route path="/" element={< LoginPage />} />
+                    {/* <Route path="/" element={<  />} /> */}
 
                     <Route path="/access/login" element={< LoginPage />} />
                 </UserContext.Provider>
