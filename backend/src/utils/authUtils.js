@@ -8,16 +8,18 @@ const JWT_SECRET = process.env.JWT_SECRET || "dfghjkgfd"
 
 
 // Given name, email, password  the function bcrypt the pasword and chech if user exsist > return new user true false if seccses
-export async function registerU(name,email,password){
+export async function registerU(name,email,password, address, phone_number){
     const user = await getUserByEmail(email);
     if (user){
         return false
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const result = await addUser(name, email, passwordHash);
+    const result = await addUser({name, email, password:passwordHash, address, phone_number});
     if(!result){
     return false;
     }
+    
+    
     const token = loginU(email,password)
     return token;
 }
@@ -25,6 +27,7 @@ export async function registerU(name,email,password){
 // Given email password if email don't exsist or password don't match return false else return token 
 export async function loginU(email,password){
     const user = await getUserByEmail(email);
+    
   if (!user) {
     return false;
   }
