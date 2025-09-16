@@ -22,7 +22,7 @@ function App() {
   return (
     <BrowserRouter>
       <HeaderComps />
-      <FooterComps/>
+      <FooterComps />
     </BrowserRouter>
   );
 }
