@@ -5,23 +5,34 @@ import Product from "../product/Product";
 
 export default function Products({ category }: { category: string }) {
     const [products, setProducts] = useState<ProductType[]>([]);
-
+    console.log(category);
+    console.log(products);
+    
     useEffect(() => {
     const storage = localStorage.getItem("products");
     if (storage) {
         const productsStorage: ProductType[] = JSON.parse(storage);
-        const productsCategory = productsStorage.filter(
-        (product) => product.category === category
-        );
-        setProducts(productsCategory);
+        if (category.toLowerCase() === "all") {
+            setProducts(productsStorage);
+        } else {
+            const productsCategory = productsStorage.filter(
+                (product) => product.category === category
+            );
+            setProducts(productsCategory);
+        }
     }
-
+    
     const fetchGetProduct = async () => {
         const resProducts = await getProducts();
-        const productsCategory = resProducts.filter(
-        (product) => product.category === category
-        );
-        setProducts(productsCategory);
+        console.log("res",resProducts);
+        if (category.toLowerCase() === "all") {
+            setProducts(resProducts);
+        } else {
+            const productsCategory = resProducts.filter(
+            (product) => product.category === category
+            );
+            setProducts(productsCategory);
+        }
         localStorage.setItem("products", JSON.stringify(resProducts));
     };
 

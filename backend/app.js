@@ -18,11 +18,11 @@ app.use(cors());
 
 app.use('/access',access)
 
-app.use('/buyers',middleware)
+app.use("/buyers/products", productsRouter);
+
+app.use('/buyers',middleware);
 
 app.use('/buyers/users',userRoutes);
-
-app.use("/buyers/products", productsRouter);
 
 connectToPurchasingGroupsDB();
 
