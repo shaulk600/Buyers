@@ -4,7 +4,7 @@ import './Header.css';
 export default function Header() {
   return (
     <header id="HeaderComps">
-      <Link to="/page/home" id="logo">
+      <Link to="/home">
         <img id="logo-img" src="/logo-buyers-typographic.svg" alt="logo-buyers" />
       </Link>
       <nav>

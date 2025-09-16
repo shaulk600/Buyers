@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Product.css";
 import type { ProductType } from "../../logic/ProductType";
 import { getProducts, updateProduct } from "../../logic/api/product.api";
-import type { User } from "../../logic/UserType";
+import type { UserType } from "../../logic/UserType";
 
 export default function Product({ id_product }: { id_product: string }) {
     const [product, setProduct] = useState<ProductType>({
@@ -20,26 +20,7 @@ export default function Product({ id_product }: { id_product: string }) {
     });
 
     const [ isOrdered, setIsOrdered ] = useState(false);
-
-    const addUserToProduct = async () => {
-        const user: User = { name: "John", password: "123", email: "john@email.com" };
-        // setProduct((product) => ({
-        //     ...product, orderd: [...product.orderd, user]
-        // }));
-        // const result = await updateProduct(product._id, product);
-        setIsOrdered(true);
-        console.log(isOrdered);
-    }
-
-    const removeUserFromProduct = async () => {
-        const user: User = { name: "John", password: "123", email: "john@email.com" };
-        // setProduct((product) => ({
-        //     ...product, orderd: product.orderd.filter((u) => u.email !== user.email)
-        // }));
-        // const result = await updateProduct(product._id, product);
-        setIsOrdered(false);
-    }
-
+    
     useEffect(() => {
         const storage = localStorage.getItem("products");
         let products;
@@ -62,12 +43,39 @@ export default function Product({ id_product }: { id_product: string }) {
         fetchGetProduct();
     }, []);
 
+    const addUserToProduct = async () => {
+        const user: UserType = { name: "John", password: "123", email: "john@email.com" };
+        console.log("1",product);
+        setProduct((product) => ({
+            ...product, orderd: [...(product.orderd || []), user]
+        }));
+        console.log(product._id);
+        console.log(id_product);
+        const result = await updateProduct(id_product, product);
+        console.log("res",result);
+        if (result) {
+            setIsOrdered(true);
+        }
+        console.log(isOrdered);
+    }
+
+    const removeUserFromProduct = async () => {
+        const user: UserType = { name: "John", password: "123", email: "john@email.com" };
+        setProduct((product) => ({
+            ...product, orderd: (product.orderd || []).filter((u) => u.email !== user.email)
+        }));
+        const result = await updateProduct(product._id, product);
+        if (result) {
+            setIsOrdered(false);
+        }
+    }
+
     return (
         <div id="ProductDetailsPage">
 
             <section className="img_product">
 
-                <img src={product.image} alt={`${product.title}-image`} />
+                <img src={product.image || undefined} alt={`${product.title}-image`} />
 
             </section>
 
@@ -87,10 +95,6 @@ export default function Product({ id_product }: { id_product: string }) {
                 <label > קטגוריית :</label>
                 <p>{product.category}</p>
 
-                <div className="CommentsOrders">
-                    {/* יהיה פה קומפוננטה שתיקח את האובייקט של התגובות ו "תמרח" אותו על המסך */}
-                </div>
-
                 <footer className="btn_footer">
                     {isOrdered  ? 
                         (<button 
@@ -106,7 +110,6 @@ export default function Product({ id_product }: { id_product: string }) {
                         </button>
                         )
                     }
-                    <button> תגובות מוצר מרוכשים</button>
                 </footer>
 
             </section>

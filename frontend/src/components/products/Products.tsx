@@ -5,45 +5,35 @@ import Product from "../product/Product";
 
 export default function Products({ category }: { category: string }) {
     const [products, setProducts] = useState<ProductType[]>([]);
-    console.log(category);
-    console.log(products);
     
     useEffect(() => {
-    const storage = localStorage.getItem("products");
-    if (storage) {
-        const productsStorage: ProductType[] = JSON.parse(storage);
-        if (category.toLowerCase() === "all") {
-            setProducts(productsStorage);
-        } else {
-            const productsCategory = productsStorage.filter(
-                (product) => product.category === category
-            );
-            setProducts(productsCategory);
-        }
-    }
-    
-    const fetchGetProduct = async () => {
-        const resProducts = await getProducts();
-        console.log("res",resProducts);
-        if (category.toLowerCase() === "all") {
-            setProducts(resProducts);
-        } else {
-            const productsCategory = resProducts.filter(
-            (product) => product.category === category
-            );
-            setProducts(productsCategory);
-        }
-        localStorage.setItem("products", JSON.stringify(resProducts));
-    };
+        const storage = localStorage.getItem("products");
+        const productsStorage: ProductType[] = storage ? JSON.parse(storage) : [];
 
-    fetchGetProduct();
+        const fetchProducts = async () => {
+            const resProducts = await getProducts();
+            localStorage.setItem("products", JSON.stringify(resProducts));
+            return resProducts;
+        }
+
+        const getProductsByCategory = async () => {
+            const allProducts = productsStorage.length ? productsStorage : await fetchProducts();
+            if (category.toLowerCase() === "all") {
+                setProducts(allProducts);
+            } else {
+                setProducts(allProducts.filter(p => p.category === category));
+            }
+        }
+
+        getProductsByCategory();
     }, [category]);
+
 
   return (
     <div className="comp-products">
         {
             products.map(product => (
-                <Product id_product={product._id}/>
+                <Product key={product._id} id_product={product._id}/>
             ))
         }
     </div>
