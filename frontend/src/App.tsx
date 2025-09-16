@@ -3,7 +3,9 @@ import { useEffect } from "react"
 import { getProducts } from "./logic/api/product.api"
 import Header from './components/header/Header'
 import ProductsPage from './pages/productsPage/ProductsPage'
-import Footer from './components/footer/footer'
+import Footer from './components/footer/Footer'
+import LoginPage from './pages/login/LoginPage'
+import RegisterPage from './pages/register/RegisterPage'
 
 function App() {
 
@@ -19,10 +21,12 @@ function App() {
   }, []);
 
   return (
-    <>   
-      <Header/>
-      <ProductsPage/>
-      <Footer/>
+    <>
+      <RegisterPage />
+      <LoginPage />
+      <Header />
+      {/* <ProductsPage /> */}
+      <Footer />
     </>
   )
 }
