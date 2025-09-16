@@ -1,4 +1,4 @@
-import type { ProductType} from "../ProductType";
+import type { ProductType } from "../ProductType";
 
 export async function getProducts(): Promise<ProductType[]>{
     const res = await fetch(`http://localhost:3000/buyers/products`);
