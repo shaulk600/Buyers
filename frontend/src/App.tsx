@@ -7,7 +7,7 @@ import Footer from "./components/footer/Footer";
 import { Route, Routes } from "react-router";
 import LoginPage from "./pages/login/LoginPage";
 import HomePage from "./pages/home/homePage";
-import SignUpPage from "./pages/signUp/signUpPage";
+import RegisterPage from "./pages/register/RegisterPage";
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
@@ -32,7 +32,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={<SignUpPage />}></Route>
+        <Route path="/signUp" element={< RegisterPage/>}></Route>
         <Route path="/signIn" element={<LoginPage />}></Route>
         <Route path="/products" element={<ProductsPage />}></Route>
         <Route path="/cart" element={<CartPage />}></Route>
