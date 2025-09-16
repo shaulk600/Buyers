@@ -1,19 +1,47 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { getProducts } from "./logic/api/product.api";
+
 import Header from "./components/header/Header";
-import ProductsPage from "./pages/productsPage/ProductsPage";
 import Footer from "./components/footer/Footer";
-import { Route, Routes } from "react-router";
-import LoginPage from "./pages/login/LoginPage";
+
+import ProductsPage from "./pages/productsPage/ProductsPage";
+
 import HomePage from "./pages/home/homePage";
-import SignUpPage from "./pages/signUp/signUpPage";
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
+import LoginPage from "./pages/login/LoginPage";
+import SignUpPage from "./pages/signUp/signUpPage";
 import UserProfilePage from "./pages/profile/UserProfilePage";
-import { UserProvider } from "./context/UserContext";
-        
+
+import { Route, Routes } from "react-router";
+import { UserContext, UserProvider } from "./context/UserContext";
+
+function AppRoutes() {
+  // להביא את user לפה
+  const { userUseContext } = useContext(UserContext);
+
+  return (
+    <Routes>
+      <Route path="/home" element={<HomePage />}></Route>
+      <Route path="/products" element={<ProductsPage />}></Route>
+      <Route path="/cart" element={<CartPage />}></Route>
+
+      <Route path="/about" element={<AboutPage />}></Route>
+      <Route path="/contactUs" element={<ContactUsPage />}></Route>
+      {userUseContext !== undefined && userUseContext !== null ? (
+        <Route path="/profile" element={<UserProfilePage />}></Route>
+      ) : (
+        <>
+          <Route path="/signUp" element={<SignUpPage />}></Route>
+          <Route path="/signIn" element={<LoginPage />}></Route>
+        </>
+      )}
+    </Routes>
+  );
+}
+
 function App() {
   useEffect(() => {
     const fetchGetProduct = async () => {
@@ -28,20 +56,11 @@ function App() {
 
   return (
     <>
-    <UserProvider>
-      <Header />
-      <Routes>
-        <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={<SignUpPage />}></Route>
-        <Route path="/signIn" element={<LoginPage />}></Route>
-        <Route path="/products" element={<ProductsPage />}></Route>
-        <Route path="/cart" element={<CartPage />}></Route>
-        <Route path="/about" element={<AboutPage />}></Route>
-        <Route path="/contactUs" element={<ContactUsPage />}></Route>
-        <Route path="/profile" element={<UserProfilePage/>}></Route>
-      </Routes>
-      <Footer />
-      </UserProvider>
+      <UserProvider>
+        <Header />
+        <AppRoutes />
+        <Footer />
+      </UserProvider >
     </>
   );
 }
