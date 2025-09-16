@@ -14,6 +14,8 @@ import ContactUsPage from "./pages/contactUs/contactUsPage";
 import UserProfilePage from "./pages/profile/UserProfilePage";
 import { UserProvider } from "./context/UserContext";
 import type { ProductType } from "./logic/ProductType";
+import RegisterPage from "./pages/register/RegisterPage";
+
         
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -32,7 +34,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={<SignUpPage />}></Route>
+        <Route path="/signUp" element={<RegisterPage />}></Route>
         <Route path="/signIn" element={<LoginPage />}></Route>
         <Route path="/products" element={<ProductsPage products={products} setProducts={setProducts}/>}></Route>
         <Route path="/cart" element={<CartPage />}></Route>
