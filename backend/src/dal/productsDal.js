@@ -70,3 +70,26 @@ export async function updateProduct(id, product) {
         throw error;
     }
 }
+
+export async function deleteAllProducts() {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const result = await db.collection("products").deleteMany({});
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+export async function insertManyProducts(productsArray) {
+    try {
+        const db = await connectToPurchasingGroupsDB();
+        const result = await db.collection("products").insertMany(productsArray);
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

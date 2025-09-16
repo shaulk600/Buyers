@@ -22,7 +22,10 @@ export default function Header() {
             <Link to="/signUp"><button>Sign Up</button></Link>
             </span>
           ) : (
-            <Link to="/profile">My Profile</Link>
+            <Link to="/profile">
+            <img id="profile-img" src="/profile.svg" alt="logo-buyers" />
+            My Profile
+            </Link>
           )
         }
     </header>
