@@ -5,7 +5,6 @@ import Header from './components/header/Header'
 import ProductsPage from './pages/productsPage/ProductsPage'
 import Footer from './components/footer/footer'
 
-
 function App() {
 
   useEffect(() => {
@@ -20,8 +19,8 @@ function App() {
   }, []);
 
   return (
-    <>
-    <Header/>
+    <>   
+      <Header/>
       <ProductsPage/>
       <Footer/>
     </>
