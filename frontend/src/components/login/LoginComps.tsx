@@ -1,10 +1,17 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
+import { useNavigate } from 'react-router';
 import { ubdateToken } from "../../logic/cookies/Token.ts"
 
+
+    
+
+
 export default function LoginComps() {
-    const contextUser = useContext(UserContext);
+    const contextUser = useContext(UserContext); // שימוש ב-context
+    const navigate = useNavigate()
+
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -64,6 +71,7 @@ export default function LoginComps() {
                     // orders: data.orders || [],
                     // groups: data.groups || [],
                 });
+                navigate('/profile')
             }
 
         } catch (err) {

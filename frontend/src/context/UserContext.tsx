@@ -22,7 +22,7 @@ export type UserFull = UserRegister & {
 
 type UserContextType = {
   user: UserFull | null;
-  setUser: (user: UserFull) => void;
+  setUser: (user: UserFull | null) => void;
   addOrder: (order: Order) => void;
   joinGroup: (group: Group) => void;
 };
