@@ -12,8 +12,8 @@ export default function Header() {
         <img id="logo-img" src="/logo-buyers-typographic.svg" alt="logo-buyers" />
       </Link>
       <nav>
-        <Link to="/home">Home</Link>
-        <Link to="/products">Products</Link>
+        <Link to="/home" className="link">Home</Link>
+        <Link to="/products" className="link">Products</Link>
       </nav>
         {
           user?.user ? (
@@ -23,8 +23,8 @@ export default function Header() {
             </Link>
           ) : (
             <span className="btn">
-            <Link to="/signIn"><button>Sign In</button></Link>
-            <Link to="/signUp"><button>Sign Up</button></Link>
+            <Link to="/signIn"><button className="btn-green">Sign In</button></Link>
+            <Link to="/signUp"><button className="btn-green">Sign Up</button></Link>
             </span>
           )
         }

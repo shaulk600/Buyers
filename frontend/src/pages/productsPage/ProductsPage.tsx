@@ -1,33 +1,32 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import Products from "../../components/products/Products";
 import Categories from "../../components/products/Categories";
 import type { ProductType } from "../../logic/ProductType";
 
 interface Props {
   products: ProductType[];
-  setProducts: Dispatch<SetStateAction<ProductType[]>>;
 }
 
 export default function ProductsPage({ products }: Props) {
   const [category, setCategory] = useState<string>("All");
   const [filteredProducts, setFilteredProducts] = useState<ProductType[]>(products);
 
-  const categories = ["All"];
-  products.forEach(product => {
-    if (!categories.includes(product.category)) {
-      categories.push(product.category);
+  // בונה רשימת קטגוריות דינמית
+  const categories = ["All", ...new Set(products.map(p => p.category))];
+
+  // סינון לפי קטגוריה
+  useEffect(() => {
+    if (category === "All") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(p => p.category === category));
     }
-  });
+  }, [category, products]);
 
   return (
     <>
       <Categories onSelectCategory={setCategory} categories={categories} />
-      <Products 
-        category={category}
-        products={products}
-        filteredProducts={filteredProducts}
-        setFilteredProducts={setFilteredProducts}
-      />
+      <Products products={filteredProducts} />
     </>
   );
 }

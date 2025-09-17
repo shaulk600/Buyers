@@ -99,7 +99,7 @@ export default function LoginComps() {
     }, []);
 
     return (
-        <div>
+        <div className='page'>
             <h2>Welcome Back</h2>
 
             <div id='loginContext'>
