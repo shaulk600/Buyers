@@ -9,7 +9,7 @@ export type ProductType = {
     image:string,
     category:string,
     orderd:UserType[], ///הוזמנו ומי הזמין
-    comments:[{id:number, text:string}], // מערך תגובות
+    comments:{id?:number, text:string}[], // מערך תגובות
     quantityCustomers:number,
     quantityAllCustomers:number
 }
