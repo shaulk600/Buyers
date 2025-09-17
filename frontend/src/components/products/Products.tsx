@@ -1,74 +1,66 @@
-import { useEffect,useState, type Dispatch, type SetStateAction } from "react"
-import type { ProductType } from "../../logic/ProductType"
-import { getProducts } from "../../logic/api/product.api";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import type { ProductType } from "../../logic/ProductType";
 import Product from "../product/Product";
 
-
 interface Props {
-    category: string;
-    products: ProductType[]
-  setProducts: Dispatch<SetStateAction<ProductType[]>>
+  category: string;
+  products: ProductType[];
+  filteredProducts: ProductType[];
+  setFilteredProducts: Dispatch<SetStateAction<ProductType[]>>;
 }
-  
-export default function Products({ category, products, setProducts }: Props) {
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [filterProducts, setFilterProducts] = useState<ProductType[]>([]);
+
+export default function Products({ category, products, filteredProducts, setFilteredProducts }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
-  console.log(searchTerm);
-  console.log(filterProducts);
 
   useEffect(() => {
-    const fetchGetProduct = async () => {
-        
-        if (category.toLowerCase() !== "all") {
-            const productsCategory = products.filter(
-                (product) => product.category === category
-            );
-            setProducts(productsCategory);
-        }
-    };
-    fetchGetProduct();
-  }, [category]);
+    let filtered = products;
 
+    // סינון לפי קטגוריה
+    if (category.toLowerCase() !== "all") {
+      filtered = products.filter((product) => product.category === category);
+    }
 
-  function search() {
-    const filtered = products.filter((f) =>
-      f.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilterProducts(filtered);
-    if (!filtered || filtered.length === 0) {
-      setMessage(`${searchTerm} not found`);
+    // סינון לפי חיפוש
+    if (searchTerm) {
+      filtered = filtered.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (filtered.length === 0) {
+      setMessage(`${searchTerm || category} not found`);
     } else {
       setMessage("");
     }
-  }
+
+    setFilteredProducts(filtered);
+  }, [category, searchTerm, products, setFilteredProducts]);
 
   return (
     <div className="comp-products">
+      {/* חיפוש */}
       <div>
         <input
           type="text"
           placeholder="Search product..."
+          value={searchTerm}
           onChange={(e) => {
             setMessage("");
             setSearchTerm(e.target.value);
           }}
         />
-        <button type="button" onClick={search}>
-          Search
-        </button>
-        {message && searchTerm && <p>{message}</p>}
       </div>
-      {!searchTerm &&
-        products.map((product) => (
-          <Product key={product._id} id_product={product._id} />
-        ))}
 
-      {searchTerm &&
-        filterProducts.map((product) => (
+      {/* הודעה אם אין תוצאות */}
+      {message && <p>{message}</p>}
+
+      {/* מוצרים */}
+      <div className="products-list">
+        {filteredProducts.map((product) => (
           <Product key={product._id} id_product={product._id} />
         ))}
+      </div>
     </div>
   );
 }

@@ -60,14 +60,16 @@ export async function deleteProduct(id) {
 export async function updateProduct(id, product) {
     try {
         const db = await connectToPurchasingGroupsDB();
-        const result = await db.collection("products").updateOne({ _id: new ObjectId(id) }, { $set: product });
+        const result = await db.collection("products").findOneAndUpdate(
+            { _id: new ObjectId(id) },
+            { $set: product }
+        );
         return result;
     } catch (error) {
-        console.error(error);
+        console.error("Update product error:", error);
         throw error;
     }
 }
-
 
 export async function deleteAllProducts() {
     try {
