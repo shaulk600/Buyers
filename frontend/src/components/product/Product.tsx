@@ -4,7 +4,7 @@ import type { ProductType } from "../../logic/ProductType";
 import { getProducts } from "../../logic/api/product.api";
 import type { UserType } from "../../logic/UserType";
 
-export default function Product({ id_product }: { id_product: string }) {
+export default function Product({ id_product }: { id_product: string}) {
   const [product, setProduct] = useState<ProductType>({
     _id: "",
     title: "",
