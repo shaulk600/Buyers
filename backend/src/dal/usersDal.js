@@ -22,8 +22,6 @@ export async function addUser(userData) {
 }
 
 export async function deleteUser(id) {
-  const result = await db
-    .collection("users")
-    .deleteOne({ _id: new ObjectId(id) });
+  const result = users.deleteOne({ _id: new ObjectId(id) });
   return result.deletedCount > 0;
 }

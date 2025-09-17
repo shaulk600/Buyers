@@ -21,12 +21,19 @@ export async function checkEmail(req,res){
 export async function registerC(req,res){
     try{
     console.log("server get to add a user metod:",req.method);
-    const {first_name,last_name,email,address, phone_number,password, } = req.body
-    const name = first_name+last_name;
+    const {first_name,last_name,email,address, phone_number,password,
+      card_number,
+    card_holder,
+    exp_month,
+    exp_year,
+    cvv
+    } = req.body
+    const name = first_name+" "+last_name;
     if (!name,!email,!password){
         res.status(500).json({ msg: "Missing fields" });
     }
-    const seccses = await registerU(name, email ,password, address, phone_number);
+    const card = {card_number,card_holder,exp_month,exp_year,cvv}
+    const seccses = await registerU(name, email ,password, address, phone_number,card);
     if (seccses) {
         console.log("sending "+`user ${name} added succefuly`);
       res.status(200).json({msg:`user ${name} added succefuly`,token:seccses});
