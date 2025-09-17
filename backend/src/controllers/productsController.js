@@ -73,16 +73,15 @@ export async function deleteProductById(req, res) {
 
 //update product
 export async function updateProductById(req, res) {
+  const id = req.params.id;
+    if (!id) return res.status(400).json({ error: 'Missing id' });
   try {
-    const productId = req.params.id;
-    const product = req.body;
-
-    const result = await updateProduct(productId, product);
+    const result = await updateProduct(id, { ...req.body });
 
     if (!result || result.modifiedCount === 0) {
       return res.status(404).json({ msg: "Product not found" });
     }
-
+    console.log(result);
     res.status(200).json(result);
   } catch (err) {
     console.error("Update product error:", err);

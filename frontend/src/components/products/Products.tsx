@@ -1,6 +1,5 @@
 import { useEffect,useState, type Dispatch, type SetStateAction } from "react"
 import type { ProductType } from "../../logic/ProductType"
-// import { getProducts } from "../../logic/api/product.api";
 import Product from "../product/Product";
 import { Link } from "react-router";
 
@@ -13,7 +12,6 @@ interface Props {
 }
   
 export default function Products({ category, products, setProducts }: Props) {
-  // const [products, setProducts] = useState<ProductType[]>([]);
   const [filterProducts, setFilterProducts] = useState<ProductType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
@@ -54,6 +52,7 @@ export default function Products({ category, products, setProducts }: Props) {
           placeholder="Search product..."
           onChange={(e) => {
             setMessage("");
+            setFilterProducts([])
             setSearchTerm(e.target.value);
           }}
         />

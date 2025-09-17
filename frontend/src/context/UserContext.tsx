@@ -1,5 +1,5 @@
 // src/context/UserContext.tsx
-import  { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { UserRegister } from "../logic/UserType";
 
@@ -8,7 +8,6 @@ export type Order = {
   productName: string;
   date: string;
   status: string;
-  total: number;
 };
 
 export type Group = {
@@ -23,7 +22,7 @@ export type UserFull = UserRegister & {
 
 type UserContextType = {
   user: UserFull | null;
-  setUser: (user: UserFull) => void;
+  setUser: (user: UserFull | null) => void;
   addOrder: (order: Order) => void;
   joinGroup: (group: Group) => void;
 };
