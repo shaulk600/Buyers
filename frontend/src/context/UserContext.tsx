@@ -8,7 +8,6 @@ export type Order = {
   productName: string;
   date: string;
   status: string;
-  total: number;
 };
 
 export type Group = {
