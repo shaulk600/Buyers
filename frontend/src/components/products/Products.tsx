@@ -1,42 +1,41 @@
-import { useEffect,useState, type Dispatch, type SetStateAction } from "react"
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react"
 import type { ProductType } from "../../logic/ProductType"
 import Product from "../product/Product";
 import { Link } from "react-router";
 
-
-
 interface Props {
-    category: string;
-    products: ProductType[]
+  category: string;
+  products: ProductType[]
   setProducts: Dispatch<SetStateAction<ProductType[]>>
 }
-  
-export default function Products({ category, products, setProducts }: Props) {
+
+export default function Products({ category, products }: Props) {
   const [filterProducts, setFilterProducts] = useState<ProductType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
-  console.log(searchTerm);
-  console.log(filterProducts);
 
+  // סינון לפי קטגוריה
   useEffect(() => {
-    const fetchGetProduct = async () => {
-        
-        if (category.toLowerCase() !== "all") {
-            const productsCategory = products.filter(
-                (product) => product.category === category
-            );
-            setProducts(productsCategory);
-        }
-    };
-    fetchGetProduct();
-  }, [category]);
+    if (category.toLowerCase() === "all") {
+      setFilterProducts(products);
+    } else {
+      const productsCategory = products.filter(
+        (product) => product.category.toLowerCase() === category.toLowerCase()
+      );
+      setFilterProducts(productsCategory);
+    }
+  }, [category, products]);
 
-
+  // חיפוש
   function search() {
     const filtered = products.filter((f) =>
-      f.title.toLowerCase().includes(searchTerm.toLowerCase())
+      f.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (category.toLowerCase() === "all" ||
+        f.category.toLowerCase() === category.toLowerCase())
     );
+
     setFilterProducts(filtered);
+
     if (!filtered || filtered.length === 0) {
       setMessage(`${searchTerm} not found`);
     } else {
@@ -52,7 +51,6 @@ export default function Products({ category, products, setProducts }: Props) {
           placeholder="Search product..."
           onChange={(e) => {
             setMessage("");
-            setFilterProducts([])
             setSearchTerm(e.target.value);
           }}
         />
@@ -61,22 +59,13 @@ export default function Products({ category, products, setProducts }: Props) {
         </button>
         {message && searchTerm && <p>{message}</p>}
       </div>
-      {!searchTerm &&
-        products.map((product) => (
-          <div>
-          <Link to={`/product/${product._id}`}>Product details</Link>
-          <Product key={product._id} id_product={product._id} />
-          </div>
-           
-        ))}
 
-      {searchTerm &&
-        filterProducts.map((product) => (
-         <div>
+      {filterProducts.map((product) => (
+        <div key={product._id}>
           <Link to={`/product/${product._id}`}>Product details</Link>
-          <Product key={product._id} id_product={product._id} />
-          </div>
-        ))}
+          <Product id_product={product._id} />
+        </div>
+      ))}
     </div>
   );
 }
