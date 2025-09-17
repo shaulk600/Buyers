@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import { useUser, UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
+import { ubdateToken } from "../../logic/cookies/Token.ts"
 
 export default function LoginComps() {
     const contextUser = useContext(UserContext);
 
-    const { setUser } = useUser(); // שימוש ב-context
+    // const { setUser } = useUser(); // שימוש ב-context
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -53,17 +54,21 @@ export default function LoginComps() {
             const data = await res.json();
             // טוקן חוזר לא תקין
             if (res.status === 401 && data['token'] === "false") {
-                updateToken(data, "BuyersAccessToken");
+                ubdateToken(data, "BuyersAccessToken");
             }
+
             const r = data.user;
+
             if (data.user) {
                 console.log("r : ", r)
-                // הכנסת המשתמש ל־context
-                contextUser?.setUser({
-                    ...r,
-                    // orders: data.orders || [],
-                    // groups: data.groups || [],
-                });
+                if (contextUser !== undefined) {
+                    // הכנסת המשתמש ל־context
+                    contextUser['setUser']({
+                        ...r
+                        // orders: data.orders || [],
+                        // groups: data.groups || [],
+                    });
+                }
             }
 
         } catch (err) {
