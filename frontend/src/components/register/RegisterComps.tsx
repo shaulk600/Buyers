@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import "./RegisterComps.css";
-import { validTypeUserRegister, type UserRegister } from "../../logic/UserType";
+import { validTypeUserRegister, type UserRegister, type UserRegisterR } from "../../logic/UserType";
 import { saveToken } from "../../logic/cookies/Token";
 
 // משהו פה לא עובד - מחזיר 400 ב"הבא פרטי לקוח" .לבדוק
@@ -13,7 +13,7 @@ export default function RegisterComps() {
 
         const formData = new FormData(e.currentTarget);
 
-        const newUser: UserRegister = {
+        const newUser: UserRegisterR = {
             first_name: formData.get("first_name") as string,
             last_name: formData.get("last_name") as string,
             password: formData.get("password") as string,
@@ -22,14 +22,14 @@ export default function RegisterComps() {
             phone_number: formData.get("phone_number") as string,
 
             // Payment details - לא לשמור כאן - סימולצייה בלבד - להעביר לחברת הסליקה
-            card_number: formData.get("card_number") as string,
-            card_holder: formData.get("card_holder") as string,
-            exp_month: formData.get("exp_month") as string,
-            exp_year: formData.get("exp_year") as string,
-            cvv: formData.get("cvv") as string,
+            // card_number: formData.get("card_number") as string,
+            // card_holder: formData.get("card_holder") as string,
+            // exp_month: formData.get("exp_month") as string,
+            // exp_year: formData.get("exp_year") as string,
+            // cvv: formData.get("cvv") as string,
         };
 
-        // if (validTypeUserRegister(newUser)) {
+        if (validTypeUserRegister(newUser)) {
             try {
                 const res = await fetch("http://localhost:3000/access/register", {
                     method: "POST",
@@ -42,7 +42,7 @@ export default function RegisterComps() {
                 const data = await res.json();
 
                 if (res.ok) {
-                    saveToken("buyersMyToken", data.token);
+                    saveToken("BuyersAccessToken", data.token);
                     window.alert(" :):) Registration completed -- Goes to menu");
                     navigate("/home");
                 } else {
@@ -50,11 +50,11 @@ export default function RegisterComps() {
                 }
             } catch (err) {
                 console.error("Error function createUser:", err);
-                window.alert("❌ Server error, please try again later");
+                window.alert(" Server error, please try again later");
             }
-        // } else {
-        //     window.alert("❌ Invalid data");
-        // }
+        } else {
+            window.alert(" Invalid data");
+        }
     };
 
     return (
@@ -110,6 +110,7 @@ export default function RegisterComps() {
                     name="address"
                     placeholder="רחוב/עיר"
                     className="input-btn" />
+
                 {/* <hr />
 
 

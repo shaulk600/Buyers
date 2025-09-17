@@ -1,12 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
-import { useUser, UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
 import { ubdateToken } from "../../logic/cookies/Token.ts"
 
 export default function LoginComps() {
     const contextUser = useContext(UserContext);
-
-    // const { setUser } = useUser(); // שימוש ב-context
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -14,7 +12,7 @@ export default function LoginComps() {
     const [result, setResult] = useState<any>(null);
     const [token, setToken] = useState<string | null>(null);
 
-
+    //send login
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         try {
@@ -29,7 +27,6 @@ export default function LoginComps() {
             const data = await res.json();
             setResult(data);
 
-            // שמירת token אם קיים
             if (data?.token) {
                 localStorage.setItem("BuyersAccessToken", data.token);
                 setToken(data.token);
@@ -40,7 +37,7 @@ export default function LoginComps() {
         }
     }
 
-
+    //get user from Server
     const getUserFromServer = async (myToken: string) => {
         try {
             const res = await fetch(`http://localhost:3000/buyers/users/data`, {
@@ -52,30 +49,29 @@ export default function LoginComps() {
             });
 
             const data = await res.json();
+
             // טוקן חוזר לא תקין
             if (res.status === 401 && data['token'] === "false") {
                 ubdateToken(data, "BuyersAccessToken");
             }
+            
+            if (data.user && contextUser) {
+                console.log("user from server - show: ", data.user);
 
-            const r = data.user;
-
-            if (data.user) {
-                console.log("r : ", r)
-                if (contextUser !== undefined) {
-                    // הכנסת המשתמש ל־context
-                    contextUser['setUser']({
-                        ...r
-                        // orders: data.orders || [],
-                        // groups: data.groups || [],
-                    });
-                }
+                // עדכון ה־ context עם USER
+                contextUser.setUser({
+                    ...data.user,
+                    // orders: data.orders || [],
+                    // groups: data.groups || [],
+                });
             }
 
         } catch (err) {
-            console.log('error function getUserFromServer: ', err);
+            console.log('Error function getUserFromServer: ', err);
         }
     }
 
+    // if new token..
     useEffect(() => {
         const fetchUser = async () => {
             if (token) {
@@ -85,6 +81,7 @@ export default function LoginComps() {
         fetchUser();
     }, [token]);
 
+    // if token in LocalStorage..
     useEffect(() => {
         // בדיקה אם כבר יש token 
         const savedToken = localStorage.getItem("BuyersAccessToken");
@@ -92,8 +89,6 @@ export default function LoginComps() {
             setToken(savedToken);
         }
     }, []);
-
-
 
     return (
         <div>
