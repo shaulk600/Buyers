@@ -5,6 +5,8 @@ import { getProducts } from "../../logic/api/product.api";
 import { updateProduct } from "../../logic/api/product.api";
 import { UserContext } from "../../context/UserContext"; 
 import type { Order } from "../../context/UserContext";
+import { Link } from "react-router";
+
 
 export default function Product({ id_product }: { id_product: string }) {
     const [product, setProduct] = useState<ProductType>({
@@ -111,12 +113,10 @@ export default function Product({ id_product }: { id_product: string }) {
 
 
     return (
-        <div id="ProductDetailsPage">
+        <div id="card-product">
 
             <section className="img_product">
-
                 <img src={product.image || undefined} alt={`${product.title}-image`} />
-
             </section>
 
             <section className="product_details">
@@ -127,22 +127,23 @@ export default function Product({ id_product }: { id_product: string }) {
                     <p>{product.group_price}</p>
                 </div>
 
-                <footer className="btn_footer">
+                <div className="btn_footer">
                     {isOrdered  ? 
-                        (<button 
+                        (<button className="btn-product"
                             onClick={removeUserFromProduct}
                         >
                              בטל הצטרפות
                         </button>
                         ): (
-                        <button
+                        <button className="btn-product"
                             onClick={addUserToProduct}
                         >
                             הצטרף כעת להזמנה
                         </button>
                         )
                     }
-                </footer>
+                    <Link className="link-button" to={`/product/${product._id}`}>Product details</Link>
+                </div>
             </section>
     </div>
   );
