@@ -3,6 +3,8 @@ export type UserType = {
     email: string
 }
 
+
+
 export type UserRegisterR = {
     _id?: string;
     first_name: string;
@@ -30,6 +32,7 @@ export function validTypeUserType(obj: UserType): boolean {
     }
     return true;
 }
+
 
 export function validTypeUserRegister(obj: UserRegisterR): boolean {
     if (obj.first_name.trim() === "" ||

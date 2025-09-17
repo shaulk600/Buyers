@@ -1,11 +1,19 @@
 // src/components/user/UserProfile.tsx
 
+import { useNavigate } from "react-router";
 import { useUser } from "../../context/UserContext";
 
 export default function UserProfile() {
-  const { user } = useUser();
+  const { user,setUser } = useUser();
+  const navigate = useNavigate();
 
   if (!user) return <p>Loading user data...</p>;
+
+  const handleLogout = () => {
+    localStorage.removeItem("BuyersAccessToken");
+    setUser(null);
+    navigate('/login');
+  }
 
   return (
     <div>
@@ -13,7 +21,7 @@ export default function UserProfile() {
 
       <section>
         <h2>Personal Details</h2>
-        <p><strong>Name:</strong> {user.first_name} {user.last_name}</p>
+        <p><strong>Name:</strong> {user.name}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Phone:</strong> {user.phone_number}</p>
         <p><strong>Address:</strong> {user.address}</p>
@@ -51,6 +59,7 @@ export default function UserProfile() {
           </table>
         ) : <p>No orders yet</p>}
       </section>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
