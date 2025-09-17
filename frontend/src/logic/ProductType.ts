@@ -1,3 +1,4 @@
+import type { UserFull } from "../context/UserContext";
 import type { UserType } from "./UserType";
 
 export type ProductType = {
@@ -8,7 +9,7 @@ export type ProductType = {
   group_price: number;
   image: string | null;
   category: string;
-  orderd: UserType[]; ///הוזמנו ומי הזמין
+  orderd: UserFull[]; ///הוזמנו ומי הזמין
   comments: [{ id: number; text: string }]; // מערך תגובות
   quantityCustomers: number;
   quantityAllCustomers: number;

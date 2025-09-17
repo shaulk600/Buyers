@@ -71,7 +71,7 @@ export default function LoginComps() {
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
-                navigate('/profile')
+                navigate('/products')
             }
 
         } catch (err) {
