@@ -17,3 +17,10 @@ export function getToken(keyToken: string): string {
         return "Operation failed - keyToken not exists";
     }
 }
+
+export function ubdateToken(data:{token:string},keyToken:string){
+   if(data["token"] === "false"){
+        lk.removeItem(keyToken)
+   }
+
+}
