@@ -24,9 +24,9 @@ export default function ProductsPage({ products }: Props) {
   }, [category, products]);
 
   return (
-    <>
-      <Categories onSelectCategory={setCategory} categories={categories} />
+    <div className="page-products">
       <Products products={filteredProducts} />
-    </>
+      <Categories onSelectCategory={setCategory} categories={categories} />
+    </div>
   );
 }
