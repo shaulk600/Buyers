@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useUser } from "../../context/UserContext";
+import { useState, useEffect, useContext } from 'react'
+import { useUser, UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
 
 export default function LoginComps() {
+    const contextUser = useContext(UserContext);
+
     const { setUser } = useUser(); // שימוש ב-context
 
     const [password, setPass] = useState<string>("");
@@ -49,13 +51,18 @@ export default function LoginComps() {
             });
 
             const data = await res.json();
+            // טוקן חוזר לא תקין
+            if (res.status === 401 && data['token'] === "false") {
+                updateToken(data, "BuyersAccessToken");
+            }
+            const r = data.user;
             if (data.user) {
-                console.log(data.user)
+                console.log("r : ", r)
                 // הכנסת המשתמש ל־context
-                setUser({
-                    ...data.user,
-                    orders: data.orders || [],
-                    groups: data.groups || [],
+                contextUser?.setUser({
+                    ...r,
+                    // orders: data.orders || [],
+                    // groups: data.groups || [],
                 });
             }
 
@@ -65,9 +72,12 @@ export default function LoginComps() {
     }
 
     useEffect(() => {
-        if (token) {
-            getUserFromServer(token);
+        const fetchUser = async () => {
+            if (token) {
+                await getUserFromServer(token);
+            }
         }
+        fetchUser();
     }, [token]);
 
     useEffect(() => {

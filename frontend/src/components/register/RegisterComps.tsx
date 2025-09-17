@@ -3,6 +3,8 @@ import "./RegisterComps.css";
 import { validTypeUserRegister, type UserRegister } from "../../logic/UserType";
 import { saveToken } from "../../logic/cookies/Token";
 
+// משהו פה לא עובד - מחזיר 400 ב"הבא פרטי לקוח" .לבדוק
+
 export default function RegisterComps() {
     const navigate = useNavigate();
 
@@ -108,7 +110,7 @@ export default function RegisterComps() {
                     name="address"
                     placeholder="רחוב/עיר"
                     className="input-btn" />
-                <hr />
+                {/* <hr />
 
 
                 <h2>Payment details </h2>
@@ -168,13 +170,13 @@ export default function RegisterComps() {
                         maxLength={4}
                     />
 
-                </div>
+                </div> */}
                 {/* style */}
-                <div className="card-icons">
+                {/* <div className="card-icons">
                     <img src="/visa.png" alt="Visa" />
                     <img src="/mastercard.png" alt="MasterCard" />
                     <img src="/amex.png" alt="Amex" />
-                </div>
+                </div> */}
 
                 <br />
                 <button type="submit">הירשם</button>

@@ -11,13 +11,11 @@ import ProductsPage from "./pages/productsPage/ProductsPage";
 import HomePage from "./pages/home/homePage";
 
 import RegisterPage from "./pages/register/RegisterPage";
-
-
 import CartPage from "./pages/cart/cartPage";
 import AboutPage from "./pages/about/aboutPage";
 import ContactUsPage from "./pages/contactUs/contactUsPage";
 import LoginPage from "./pages/login/LoginPage";
-import SignUpPage from "./pages/signUp/signUpPage";
+// import SignUpPage from "./pages/signUp/signUpPage";
 import UserProfilePage from "./pages/profile/UserProfilePage";
 
 import { Route, Routes } from "react-router";
