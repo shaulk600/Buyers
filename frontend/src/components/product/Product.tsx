@@ -115,9 +115,9 @@ export default function Product({ id_product }: { id_product: string }) {
     return (
         <div id="card-product">
 
-            <section className="img_product">
+            <div className="img_product">
                 <img src={product.image || undefined} alt={`${product.title}-image`} />
-            </section>
+            </div>
 
             <section className="product_details">
                 <h2>{product.title}</h2>
