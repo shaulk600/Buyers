@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
 import { useNavigate } from 'react-router';
-import { ubdateToken } from "../../logic/cookies/Token.ts"
+import { saveToken, ubdateToken } from "../../logic/cookies/Token.ts"
 
 
-    
+
 
 
 export default function LoginComps() {
@@ -58,20 +58,23 @@ export default function LoginComps() {
             const data = await res.json();
 
             // טוקן חוזר לא תקין
+            // לא עובד - למה ??????
             if (res.status === 401 && data['token'] === "false") {
                 ubdateToken(data, "BuyersAccessToken");
             }
-            
+
             if (data.user && contextUser) {
                 console.log("user from server - show: ", data.user);
 
-                // עדכון ה־ context עם USER
-                contextUser.setUser({
-                    ...data.user,
-                    orders: data.orders || [],
-                    groups: data.groups || [],
-                });
-                navigate('/products')
+                saveToken("BuyersUser", JSON.stringify(data.user));
+                // // עדכון ה־ context עם USER
+                // contextUser.setUser({
+                //     ...data.user,
+                //     orders: data.orders || [],
+                //     groups: data.groups || [],
+                // });
+                // console.log('contextUser.user  is : ', contextUser.user)
+                // navigate('/products')
             }
 
         } catch (err) {

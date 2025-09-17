@@ -1,10 +1,12 @@
 // src/components/user/UserProfile.tsx
-
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useUser } from "../../context/UserContext";
+import { type UserFull, useUser } from "../../context/UserContext";
+import { getToken, ubdateToken } from "../../logic/cookies/Token";
 
 export default function UserProfile() {
-  const { user,setUser } = useUser();
+  const { user, setUser } = useUser();
+  const [userLocalStorage, setUserLocalStorage] = useState<UserFull | null>(null);
   const navigate = useNavigate();
 
   if (!user) return <p>Loading user data...</p>;
@@ -12,8 +14,15 @@ export default function UserProfile() {
   const handleLogout = () => {
     localStorage.removeItem("BuyersAccessToken");
     setUser(null);
+    ubdateToken({ token: "false" }, "BuyersUser");
     navigate('/login');
   }
+
+  useEffect(() => {
+    const data = JSON.parse(getToken("BuyersUser") || "{}");
+    setUserLocalStorage(data);
+    setUser(data);
+  }, []);
 
   return (
     <div>

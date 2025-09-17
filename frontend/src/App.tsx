@@ -37,6 +37,7 @@ function App() {
       <UserProvider>
         <Header />
         <Routes>
+          <Route path="/" element={<HomePage />}></Route>
           <Route path="/home" element={<HomePage />}></Route>
           <Route path="/signUp" element={<RegisterPage />}></Route>
           <Route path="/signIn" element={<LoginPage />}></Route>

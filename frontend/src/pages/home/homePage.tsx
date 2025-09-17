@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="page home-page">
       <h1 className="page-title">Welcome to Purchasing Groups</h1>
       <p className="page-subtitle">
-        Join forces, save money, and shop smarter together.  
+        Join forces, save money, and shop smarter together.
         Create or join purchasing groups, track your orders, and enjoy the power of community buying.
       </p>
 
@@ -20,7 +20,7 @@ export default function HomePage() {
       </div>
 
       <div className="page-actions">
-        <Link to="/products" className="btn-main">       
+        <Link to="/products" className="btn-main">
           View Products
         </Link>
       </div>
