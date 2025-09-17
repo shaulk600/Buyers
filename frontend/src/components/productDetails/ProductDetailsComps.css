@@ -1,0 +1,122 @@
+/* Container */
+#ProductDetailsPage {
+  max-width: 850px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+/* Status */
+.product-status {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+.product-status.open {
+  color: #155724;
+  background: #d4edda;
+}
+.product-status.closed {
+  color: #721c24;
+  background: #f8d7da;
+}
+.product-status.already\ joined {
+  color: #004085;
+  background: #cce5ff;
+}
+
+/* Title */
+.product-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 1rem 0 1.5rem;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* Image */
+.img_product img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.img_product img:hover {
+  transform: scale(1.03);
+}
+
+/* Info Grid */
+.product-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.price-box,
+.quantity-box {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+}
+.price-box h4,
+.quantity-box h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+.price-box p,
+.quantity-box p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #222;
+}
+
+/* Description */
+.product-description {
+  margin: 1.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Footer Buttons */
+.btn_footer {
+  margin-top: 2rem;
+}
+.btn_footer button {
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+.join-btn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+}
+.join-btn:hover {
+  background: linear-gradient(135deg, #66bb6a, #388e3c);
+}
+.join-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.cancel-btn {
+  background: linear-gradient(135deg, #f44336, #c62828);
+  color: #fff;
+}
+.cancel-btn:hover {
+  background: linear-gradient(135deg, #e57373, #b71c1c);
+}

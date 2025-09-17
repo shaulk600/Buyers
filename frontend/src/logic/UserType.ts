@@ -6,13 +6,13 @@ export type UserType = {
 
 
 export type UserRegisterR = {
-    _id?: string;
-    first_name: string;
-    last_name: string;
-    password: string;
-    email: string;
-    address: string;
-    phone_number: string;
+    _id?: string,
+    first_name: string,
+    last_name: string,
+    password: string,
+    email: string,
+    address: string,
+    phone_number: string,
     //פרטי כרטיס
     // card_number: string,
     // card_holder: string,
@@ -22,8 +22,13 @@ export type UserRegisterR = {
 };
 
 // UserRegister מבוסס על UserRegisterR אבל מוסיף/משנה שדות
-export type UserRegister = Omit<UserRegisterR, "first_name" | "last_name"> & {
-    name: string; // במקום first_name + last_name
+export type UserRegister = {
+    _id?: string,
+    name: string,
+    password: string,
+    email: string,
+    address: string,
+    phone_number: string,
 };
 
 export function validTypeUserType(obj: UserType): boolean {

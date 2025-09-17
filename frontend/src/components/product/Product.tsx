@@ -50,6 +50,7 @@ export default function Product({ id_product }: { id_product: string }) {
 
     const addUserToProduct = async () => {
     if (!userUseContext?.user) {
+        // אולי הודעת הבהרה - מעבירים אותך לתפריט התחברות...
         window.location.href = "/signIn";
         return;
     }

@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
-import Product from "../../components/product/Product"
+// import Product from "../../components/product/Product"
+import ProductDetailsComps from "../../components/productDetails/ProductDetailsComps";
 
 
 export default function ProductDinamicPage() {
@@ -7,7 +8,7 @@ export default function ProductDinamicPage() {
     console.log(id)
   return (
     <div>
-        <Product id_product={id}/>
+        <ProductDetailsComps id_product={id}/>
     </div>
   )
 }
