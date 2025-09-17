@@ -20,6 +20,7 @@ export async function getUsersC(req,res){
         const email = req.user["email"]        
         const user = await getUserByEmail(email);
         delete user.password;
+        delete user.card;
         if (!user) return res.status(404).json({ error: "User not found" });
         res.json({user:user});
     } catch (error) {

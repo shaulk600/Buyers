@@ -146,9 +146,7 @@ export default function Product({ id_product }: { id_product: string }) {
                         )
                     }
                 </footer>
-
             </section>
-
-        </div>
-    )
+    </div>
+  );
 }

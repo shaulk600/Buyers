@@ -16,16 +16,16 @@ export default function Header() {
         <Link to="/products">Products</Link>
       </nav>
         {
-          user ? (
+          user?.user ? (
+            <Link to="/profile">
+            <img id="profile-img" src="/profile.svg" alt="logo-buyers" />
+            Profile
+            </Link>
+          ) : (
             <span className="btn">
             <Link to="/signIn"><button>Sign In</button></Link>
             <Link to="/signUp"><button>Sign Up</button></Link>
             </span>
-          ) : (
-            <Link to="/profile">
-            <img id="profile-img" src="/profile.svg" alt="logo-buyers" />
-            My Profile
-            </Link>
           )
         }
     </header>
