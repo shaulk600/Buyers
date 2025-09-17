@@ -13,12 +13,13 @@ export async function getProduct(id: string) {
 }
 
 export async function updateProduct(id: string, product: ProductType) {
+    const { _id, ...productWithoutId } = product;
     const res = await fetch(`http://localhost:3000/buyers/products/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(product)
+        body: JSON.stringify(productWithoutId)
     });
     const result = await res.json();
     return result;
