@@ -2,14 +2,17 @@ export type UserType = {
     password: string,
     email: string
 }
+
+
+
 export type UserRegisterR = {
-    id?: string,
-    first_name: string,
-    last_name: string,
-    password: string,
-    email: string,
-    address: string,
-    phone_number: string,
+    _id?: string;
+    first_name: string;
+    last_name: string;
+    password: string;
+    email: string;
+    address: string;
+    phone_number: string;
     //פרטי כרטיס
     // card_number: string,
     // card_holder: string,
@@ -29,6 +32,7 @@ export function validTypeUserType(obj: UserType): boolean {
     }
     return true;
 }
+
 
 export function validTypeUserRegister(obj: UserRegisterR): boolean {
     if (obj.first_name.trim() === "" ||

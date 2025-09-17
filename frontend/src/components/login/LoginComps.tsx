@@ -4,9 +4,14 @@ import "./LoginComps.css";
 import { useNavigate } from 'react-router';
 import { ubdateToken } from "../../logic/cookies/Token.ts"
 
+
+    
+
+
 export default function LoginComps() {
     const contextUser = useContext(UserContext); // שימוש ב-context
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
