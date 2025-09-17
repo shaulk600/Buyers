@@ -23,8 +23,8 @@ export default function Header() {
             </Link>
           ) : (
             <span className="btn">
-            <Link to="/signIn"><button>Sign In</button></Link>
-            <Link to="/signUp"><button>Sign Up</button></Link>
+            <Link to="/signIn"><button className="btn-green">Sign In</button></Link>
+            <Link to="/signUp"><button className="btn-green">Sign Up</button></Link>
             </span>
           )
         }

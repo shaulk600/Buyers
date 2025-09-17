@@ -41,7 +41,7 @@ export default function Products({ products }: Props) {
       </div>
 
       {displayProducts.map((product) => (
-        <div className="" key={product._id}>
+        <div key={product._id}>
           <Product id_product={product._id} />
         </div>
       ))}
