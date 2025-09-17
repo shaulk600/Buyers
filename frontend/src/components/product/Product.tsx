@@ -4,6 +4,7 @@ import type { ProductType } from "../../logic/ProductType";
 import { getProducts } from "../../logic/api/product.api";
 import { updateProduct } from "../../logic/api/product.api";
 import { UserContext } from "../../context/UserContext"; 
+import type { Order } from "../../context/UserContext";
 
 export default function Product({ id_product }: { id_product: string }) {
     const [product, setProduct] = useState<ProductType>({
@@ -55,7 +56,13 @@ export default function Product({ id_product }: { id_product: string }) {
         ...product,
         orderd: [...(product.orderd || []), userUseContext.user],
     };
-
+    const order: Order = {
+        id: product._id,
+        productName: product.title,
+        date: new Date().toUTCString(),
+        status: "By order",
+    }
+    userUseContext.user.orders.push(order);
     setProduct(updatedProduct);
     setIsOrdered(true);
 
@@ -72,8 +79,7 @@ export default function Product({ id_product }: { id_product: string }) {
     const updatedProduct: ProductType = {
         ...product,
         orderd: (product.orderd || []).filter(
-        (u) => u.email !== userUseContext.user.email
-        ),
+        (u) => u.email !== userUseContext.user.email),
     };
 
     setProduct(updatedProduct);
