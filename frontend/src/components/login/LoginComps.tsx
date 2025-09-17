@@ -68,10 +68,10 @@ export default function LoginComps() {
                 // עדכון ה־ context עם USER
                 contextUser.setUser({
                     ...data.user,
-                    // orders: data.orders || [],
-                    // groups: data.groups || [],
+                    orders: data.orders || [],
+                    groups: data.groups || [],
                 });
-                navigate('/profile')
+                navigate('/products')
             }
 
         } catch (err) {

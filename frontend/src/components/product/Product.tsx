@@ -62,7 +62,12 @@ export default function Product({ id_product }: { id_product: string }) {
         date: new Date().toUTCString(),
         status: "By order",
     }
-    userUseContext.user.orders.push(order);
+    if(userUseContext.user){
+        userUseContext.setUser({
+            ...userUseContext.user,
+            orders:[...userUseContext.user.orders,order]
+        })
+    }
     setProduct(updatedProduct);
     setIsOrdered(true);
 

@@ -52,7 +52,6 @@ export default function UserProfile() {
                   <td>{o.productName}</td>
                   <td>{o.date}</td>
                   <td>{o.status}</td>
-                  <td>{o.total}$</td>
                 </tr>
               ))}
             </tbody>
