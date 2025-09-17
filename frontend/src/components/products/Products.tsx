@@ -1,47 +1,26 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react"
-import type { ProductType } from "../../logic/ProductType"
+import { useState } from "react";
+import type { ProductType } from "../../logic/ProductType";
 import Product from "../product/Product";
-import { Link } from "react-router";
 
 interface Props {
-  category: string;
-  products: ProductType[]
-  setProducts: Dispatch<SetStateAction<ProductType[]>>
+  products: ProductType[];
 }
 
-export default function Products({ category, products }: Props) {
-  const [filterProducts, setFilterProducts] = useState<ProductType[]>([]);
+export default function Products({ products }: Props) {
+  const [filterProducts, setFilterProducts] = useState<ProductType[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
 
-  // סינון לפי קטגוריה
-  useEffect(() => {
-    if (category.toLowerCase() === "all") {
-      setFilterProducts(products);
-    } else {
-      const productsCategory = products.filter(
-        (product) => product.category.toLowerCase() === category.toLowerCase()
-      );
-      setFilterProducts(productsCategory);
-    }
-  }, [category, products]);
-
-  // חיפוש
   function search() {
-    const filtered = products.filter((f) =>
-      f.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (category.toLowerCase() === "all" ||
-        f.category.toLowerCase() === category.toLowerCase())
+    const filtered = products.filter(p =>
+      p.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
     setFilterProducts(filtered);
-
-    if (!filtered || filtered.length === 0) {
-      setMessage(`${searchTerm} not found`);
-    } else {
-      setMessage("");
-    }
+    setMessage(filtered.length === 0 ? `${searchTerm} not found` : "");
   }
+
+  // אם אין חיפוש, מציגים את כל המוצרים מההורה
+  const displayProducts = searchTerm ? filterProducts : products;
 
   return (
     <div className="comp-products">
@@ -49,6 +28,7 @@ export default function Products({ category, products }: Props) {
         <input
           type="text"
           placeholder="Search product..."
+          value={searchTerm}
           onChange={(e) => {
             setMessage("");
             setSearchTerm(e.target.value);
@@ -57,12 +37,11 @@ export default function Products({ category, products }: Props) {
         <button type="button" onClick={search}>
           Search
         </button>
-        {message && searchTerm && <p>{message}</p>}
+        {message && <p>{message}</p>}
       </div>
 
-      {filterProducts.map((product) => (
+      {displayProducts.map((product) => (
         <div key={product._id}>
-          <Link to={`/product/${product._id}`}>Product details</Link>
           <Product id_product={product._id} />
         </div>
       ))}

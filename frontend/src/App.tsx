@@ -33,14 +33,14 @@ function App() {
   }, []);
 
   return (
-    <>
+    <main>
       <UserProvider>
         <Header />
         <Routes>
           <Route path="/home" element={<HomePage />}></Route>
           <Route path="/signUp" element={<RegisterPage />}></Route>
           <Route path="/signIn" element={<LoginPage />}></Route>
-          <Route path="/products" element={ <ProductsPage products={products} setProducts={setProducts}/>}></Route>
+          <Route path="/products" element={ <ProductsPage products={products}/>}></Route>
           <Route path="/product/:id" element={<ProductDinamicPage />}></Route>
           <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
@@ -49,7 +49,7 @@ function App() {
         </Routes>
         <Footer />
       </UserProvider>
-    </>
+    </main>
   );
 }
 
