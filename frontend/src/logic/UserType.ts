@@ -4,8 +4,7 @@ export type UserType = {
 }
 export type UserRegister = {
     id?: number
-    first_name: string,
-    last_name: string,
+    name: string,
     password: string,
     email: string,
     address: string,
@@ -27,8 +26,7 @@ export function validTypeUserType(obj: UserType): boolean {
 }
 
 export function validTypeUserRegister(obj: UserRegister): boolean {
-    if (obj.first_name.trim() === "" ||
-        obj.last_name.trim() === "" ||
+    if (obj.name.trim() === "" ||
         obj.password.trim() === "" ||
         obj.email.trim() === "" ||
         obj.address.trim() === "" ||

@@ -13,7 +13,7 @@ export default function UserProfile() {
 
       <section>
         <h2>Personal Details</h2>
-        <p><strong>Name:</strong> {user.first_name} {user.last_name}</p>
+        <p><strong>Name:</strong> {user.name}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Phone:</strong> {user.phone_number}</p>
         <p><strong>Address:</strong> {user.address}</p>

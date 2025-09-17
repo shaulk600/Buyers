@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useUser } from "../../context/UserContext";
 import "./LoginComps.css";
+import { useNavigate } from 'react-router';
 
 export default function LoginComps() {
     const { setUser } = useUser(); // שימוש ב-context
+    const navigate = useNavigate()
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -57,6 +59,7 @@ export default function LoginComps() {
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
+                navigate('/profile')
             }
 
         } catch (err) {
