@@ -18,7 +18,8 @@ import UserProfilePage from "./pages/profile/UserProfilePage";
 import { Route, Routes } from "react-router";
 import { UserProvider } from "./context/UserContext";
 import type { ProductType } from "./logic/ProductType";
-        
+import ProductDinamicPage from "./pages/productDinamic/productDinamicPage";
+
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -33,20 +34,21 @@ function App() {
 
   return (
     <>
-    <UserProvider>
-      <Header />
-      <Routes>
-        <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signUp" element={< RegisterPage/>}></Route>
-        <Route path="/signIn" element={<LoginPage />}></Route>
-        <Route path="/products" element={<ProductsPage products={products} setProducts={setProducts}/>}></Route>
-        <Route path="/cart" element={<CartPage />}></Route>
-        <Route path="/about" element={<AboutPage />}></Route>
-        <Route path="/contactUs" element={<ContactUsPage />}></Route>
-        <Route path="/profile" element={<UserProfilePage/>}></Route>
-      </Routes>
-      <Footer />
-    </UserProvider>
+      <UserProvider>
+        <Header />
+        <Routes>
+          <Route path="/home" element={<HomePage />}></Route>
+          <Route path="/signUp" element={<RegisterPage />}></Route>
+          <Route path="/signIn" element={<LoginPage />}></Route>
+          <Route path="/products" element={ <ProductsPage products={products} setProducts={setProducts}/>}></Route>
+          <Route path="/product/:id" element={<ProductDinamicPage />}></Route>
+          <Route path="/cart" element={<CartPage />}></Route>
+          <Route path="/about" element={<AboutPage />}></Route>
+          <Route path="/contactUs" element={<ContactUsPage />}></Route>
+          <Route path="/profile" element={<UserProfilePage />}></Route>
+        </Routes>
+        <Footer />
+      </UserProvider>
     </>
   );
 }
