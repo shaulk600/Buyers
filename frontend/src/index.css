@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Questrial&family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Rubik:ital,wght@0,300..900;1,300..900&family=Russo+One&family=Varela+Round&display=swap');
+
+body {
+    margin: 0px;
+    color: rgb(0 79 41);
+    font-family: "Roboto Flex", sans-serif;
+    min-height: 100vh;
+}
+
+h1 {
+    margin: 0px;
+}
+
+
+

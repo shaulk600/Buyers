@@ -115,20 +115,12 @@ export default function Product({ id_product }: { id_product: string }) {
             </section>
 
             <section className="product_details">
-                <div>{product.title}</div>
+                <h2>{product.title}</h2>
 
                 <div className="divPrice">
-
-                    <label htmlFor="">מחיר רגיל</label>
                     <p>{product.regular_price}</p>
-                    <label htmlFor="">מחיר קבוצה</label>
                     <p>{product.group_price}</p>
-
                 </div>
-                <div><p>{product.description}</p></div>
-
-                <label > קטגוריית :</label>
-                <p>{product.category}</p>
 
                 <footer className="btn_footer">
                     {isOrdered  ? 

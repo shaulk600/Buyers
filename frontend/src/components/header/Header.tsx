@@ -12,8 +12,8 @@ export default function Header() {
         <img id="logo-img" src="/logo-buyers-typographic.svg" alt="logo-buyers" />
       </Link>
       <nav>
-        <Link to="/home">Home</Link>
-        <Link to="/products">Products</Link>
+        <Link to="/home" className="link">Home</Link>
+        <Link to="/products" className="link">Products</Link>
       </nav>
         {
           user?.user ? (
