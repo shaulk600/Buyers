@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useUser } from "../../context/UserContext";
 import "./LoginComps.css";
+import { ubdateToken } from "../../logic/cookies/Token.ts"
 
 export default function LoginComps() {
     const { setUser } = useUser(); // שימוש ב-context
@@ -49,6 +50,9 @@ export default function LoginComps() {
             });
 
             const data = await res.json();
+            if (data.token){
+                ubdateToken(data ,"BuyersAccessToken" )
+            }
             if (data.user) {
                 console.log(data.user)
                 // הכנסת המשתמש ל־context
