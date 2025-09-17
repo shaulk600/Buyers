@@ -1,35 +1,27 @@
 import { connectToPurchasingGroupsDB } from "../../dbConfig/dbConnection.js";
 import { ObjectId } from "mongodb";
 
+const db = await connectToPurchasingGroupsDB();
+const users = db.collection("users");
 
 export async function getAllUsers() {
-    const db = await connectToPurchasingGroupsDB();
-    return db.collection("users").find().toArray();
+  return users.find().toArray();
 }
 
-
 export async function getUserById(id) {
-    const db = await connectToPurchasingGroupsDB();
-    return db.collection("users").findOne({_id:new ObjectId(id)})
+  return users.findOne({ _id: new ObjectId(id) });
 }
 
 export async function getUserByEmail(email) {
-    const db = await connectToPurchasingGroupsDB();
-    return db.collection("users").findOne({email:email})
+  return users.findOne({ email: email });
 }
 
-
-export async function addUser(userData){
-    const db = await connectToPurchasingGroupsDB();
-    const result = await db.collection("users").insertOne(userData);
-    return db.collection("users").findOne({ _id: result.insertedId });
-  
+export async function addUser(userData) {
+  const result = await users.insertOne(userData);
+  return users.findOne({ _id: result.insertedId });
 }
-
-
 
 export async function deleteUser(id) {
-  const db = await connectToPurchasingGroupsDB();
-  const result = await db.collection("users").deleteOne({ _id: new ObjectId(id) });
+  const result = users.deleteOne({ _id: new ObjectId(id) });
   return result.deletedCount > 0;
 }

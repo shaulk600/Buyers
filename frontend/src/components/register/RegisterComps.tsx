@@ -27,7 +27,7 @@ export default function RegisterComps() {
             cvv: formData.get("cvv") as string,
         };
 
-        if (validTypeUserRegister(newUser)) {
+        // if (validTypeUserRegister(newUser)) {
             try {
                 const res = await fetch("http://localhost:3000/access/register", {
                     method: "POST",
@@ -50,9 +50,9 @@ export default function RegisterComps() {
                 console.error("Error function createUser:", err);
                 window.alert("❌ Server error, please try again later");
             }
-        } else {
-            window.alert("❌ Invalid data");
-        }
+        // } else {
+        //     window.alert("❌ Invalid data");
+        // }
     };
 
     return (
@@ -119,7 +119,7 @@ export default function RegisterComps() {
                         type="text"
                         name="card_number"
                         placeholder="1234 5678 9012 3456"
-                        required
+                        
                         className="input-btn"
                         maxLength={19}
                     />
@@ -129,7 +129,7 @@ export default function RegisterComps() {
                         type="text"
                         name="card_holder"
                         placeholder="כפי שמופיע על הכרטיס"
-                        required
+                        
                         className="input-btn"
                     />
                     <div className="exp-cvv-row">
@@ -140,7 +140,7 @@ export default function RegisterComps() {
                                 type="text"
                                 name="exp_month"
                                 placeholder="MM"
-                                required
+                                
                                 className="input-btn"
                                 maxLength={2} //הגבלה של שני תווים
                             />
@@ -151,7 +151,8 @@ export default function RegisterComps() {
                                 type="text"
                                 name="exp_year"
                                 placeholder="YY"
-                                required className="input-btn"
+                                
+                                className="input-btn"
                                 maxLength={2}
                             />
                         </div>
@@ -162,7 +163,8 @@ export default function RegisterComps() {
                         type="password"
                         name="cvv"
                         placeholder="3 ספרות בגב הכרטיס"
-                        required className="input-btn"
+                        
+                        className="input-btn"
                         maxLength={4}
                     />
 

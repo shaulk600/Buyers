@@ -1,5 +1,4 @@
 import { getAllUsers,getUserById,addUser,deleteUser,getUserByEmail } from "../dal/usersDal.js";
-import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -15,18 +14,21 @@ export async function getAllUsersC(req,res) {
     }
 }
 
+// get user by email
 export async function getUsersC(req,res){
      try {
-        const email = req.user[email]
+        const email = req.user["email"]        
         const user = await getUserByEmail(email);
         delete user.password;
+        delete user.card;
         if (!user) return res.status(404).json({ error: "User not found" });
-        res.json(user);
+        res.json({user:user});
     } catch (error) {
         res.status(500).json({error:"Faild to get user by token flise login again"}) 
     }
     
 }
+
 // get user by id
 export async function getUserByIdC(req,res) {
     try {

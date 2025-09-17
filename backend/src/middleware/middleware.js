@@ -8,10 +8,12 @@ export async function middleware(req,res,next){
      try {
     const token = req.headers["authorization"];
     if (!token) {
-      return res.status(401).json({ msg: "No token provided" });
+      return res.status(401).json({ msg: "No token provided",token:"false" });
     }
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
+    console.log(decoded);
+    
     next();
   } catch (error) {
     return res.status(400).json({ msg: "Invalid Token" });
