@@ -1,3 +1,4 @@
+import type { UserFull } from "../context/UserContext";
 import type { UserType } from "./UserType";
 
 export type ProductType = {
