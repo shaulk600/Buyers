@@ -1,151 +1,155 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Product.css";
 import type { ProductType } from "../../logic/ProductType";
-import { getProducts } from "../../logic/api/product.api";
-import { updateProduct } from "../../logic/api/product.api";
-import { UserContext } from "../../context/UserContext"; 
-import type { Order } from "../../context/UserContext";
-import { Link } from "react-router";
-
+import { getProducts, updateProduct } from "../../logic/api/product.api";
+import { useUser, type Order, type UserFull } from "../../context/UserContext";
+import { Link, useNavigate } from "react-router";
+import { getToken } from "../../logic/cookies/Token";
 
 export default function Product({ id_product }: { id_product: string }) {
-    const [product, setProduct] = useState<ProductType>({
-        _id:"",
-        title:"",
-        description:"",
-        regular_price:0,
-        group_price:0,
-        image: "",
-        category:"",
-        orderd: [],
-        comments:[{id:0, text:""}],
-        quantityCustomers:0,
-        quantityAllCustomers:0
-    });
-    const userUseContext = useContext(UserContext);
-    console.log(userUseContext);
-    const [ isOrdered, setIsOrdered ] = useState(false);
+  const [product, setProduct] = useState<ProductType>({
+    _id: "",
+    title: "",
+    description: "",
+    regular_price: 0,
+    group_price: 0,
+    image: "",
+    category: "",
+    orderd: [],
+    comments: [{ id: 0, text: "" }],
+    quantityCustomers: 0,
+    quantityAllCustomers: 0,
+  });
 
-    useEffect(() => {
-        const storage = localStorage.getItem("products");
-        let products;
-        if (storage) {
-            products = JSON.parse(storage);
-        }
-        if (products) {
-            const indexProduct = products.findIndex((p: ProductType) => p._id === id_product);
-            const productFound = products[indexProduct];
-            setProduct(productFound);
-        }
-        const fetchGetProduct = async () => {
-            if (id_product) {
-                const resProducts = await getProducts();
-                const findIndex = resProducts.findIndex((p: ProductType) => p._id === id_product);
-                const resProduct = resProducts[findIndex];
-                setProduct(resProduct);
-            }
-        }
-        fetchGetProduct();
-    }, []);
+  const { user, setUser } = useUser();
+  const [isOrdered, setIsOrdered] = useState(false);
+  const navigate = useNavigate();
 
-    const addUserToProduct = async () => {
-    if (!userUseContext?.user) {
-        // אולי הודעת הבהרה - מעבירים אותך לתפריט התחברות...
-        window.location.href = "/signIn";
-        return;
+  // טעינת המשתמש מה-localStorage אם context ריק
+  useEffect(() => {
+    if (!user) {
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+        } catch (err) {
+          console.error("Failed to parse user from localStorage", err);
+        }
+      }
+    }
+  }, [user, setUser]);
+
+
+  // --- טעינת מוצר מה־storage / שרת ---
+  useEffect(() => {
+    const storage = localStorage.getItem("products");
+    if (storage) {
+      const products = JSON.parse(storage);
+      const productFound = products.find((p: ProductType) => p._id === id_product);
+      if (productFound) setProduct(productFound);
+    }
+
+    const fetchGetProduct = async () => {
+      if (!id_product) return;
+      const resProducts = await getProducts();
+      const resProduct = resProducts.find((p: ProductType) => p._id === id_product);
+      if (resProduct) setProduct(resProduct);
+    };
+
+    fetchGetProduct();
+  }, [id_product]);
+
+  // --- הצטרפות להזמנה ---
+  const addUserToProduct = async () => {
+    if (!user) {
+      navigate("/signIn"); // ניווט SPA נקי
+      return;
     }
 
     const updatedProduct: ProductType = {
-        ...product,
-        orderd: [...(product.orderd || []), userUseContext.user],
+      ...product,
+      orderd: [...(product.orderd || []), user],
     };
+
     const order: Order = {
-        id: product._id,
-        productName: product.title,
-        date: new Date().toUTCString(),
-        status: "By order",
-    }
-    if(userUseContext.user){
-        userUseContext.setUser({
-            ...userUseContext.user,
-            orders:[...userUseContext.user.orders,order]
-        })
-    }
+      id: product._id,
+      productName: product.title,
+      date: new Date().toUTCString(),
+      status: "By order",
+    };
+
+    setUser({
+      ...user,
+      orders: [...(user.orders || []), order],
+    });
+
     setProduct(updatedProduct);
     setIsOrdered(true);
 
     try {
-        await updateProduct(updatedProduct._id, updatedProduct);
+      await updateProduct(updatedProduct._id, updatedProduct);
     } catch (err) {
-        console.error("Error updating product:", err);
+      console.error("Error updating product:", err);
     }
-    };
+  };
 
-    const removeUserFromProduct = async () => {
-    if (!userUseContext?.user?.email) return;
+  // --- ביטול הצטרפות להזמנה ---
+  const removeUserFromProduct = async () => {
+    if (!user?.email) return;
 
     const updatedProduct: ProductType = {
-        ...product,
-        orderd: (product.orderd || []).filter(
-        (u) => u.email !== userUseContext.user.email),
+      ...product,
+      orderd: (product.orderd || []).filter((u) => u.email !== user.email),
     };
 
     setProduct(updatedProduct);
     setIsOrdered(false);
 
     try {
-        await updateProduct(updatedProduct._id, updatedProduct);
+      await updateProduct(updatedProduct._id, updatedProduct);
     } catch (err) {
-        console.error("Error updating product:", err);
+      console.error("Error updating product:", err);
     }
-    };
+  };
 
-    // בדיקה אם המשתמש כבר הצטרף
-    useEffect(() => {
-    if (
-        userUseContext?.user &&
-        product.orderd?.some((u) => u.email === userUseContext.user.email)
-    ) {
-        setIsOrdered(true);
+  // --- בדיקה אם המשתמש כבר הצטרף ---
+  useEffect(() => {
+    if (user?.email && product.orderd?.some((u) => u.email === user.email)) {
+      setIsOrdered(true);
     } else {
-        setIsOrdered(false);
+      setIsOrdered(false);
     }
-    }, [product, userUseContext]);
+  }, [product, user]);
 
+  return (
+    <div id="card-product">
+      <div className="img_product">
+        <img src={product.image || undefined} alt={`${product.title}-image`} />
+      </div>
 
-    return (
-        <div id="card-product">
+      <section className="product_details">
+        <h2>{product.title}</h2>
 
-            <div className="img_product">
-                <img src={product.image || undefined} alt={`${product.title}-image`} />
-            </div>
+        <div className="divPrice">
+          <p>Price: {product.regular_price}₪</p>
+          <p>Group Price: {product.group_price}₪</p>
+        </div>
 
-            <section className="product_details">
-                <h2>{product.title}</h2>
-
-                <div className="divPrice">
-                    <p>{product.regular_price}</p>
-                    <p>{product.group_price}</p>
-                </div>
-
-                <div className="btn_footer">
-                    {isOrdered  ? 
-                        (<button className="btn-product"
-                            onClick={removeUserFromProduct}
-                        >
-                             בטל הצטרפות
-                        </button>
-                        ): (
-                        <button className="btn-product"
-                            onClick={addUserToProduct}
-                        >
-                            הצטרף כעת להזמנה
-                        </button>
-                        )
-                    }
-                    <Link className="link-button" to={`/product/${product._id}`}>Product details</Link>
-                </div>
-            </section>
+        <div className="btn_footer">
+          {isOrdered ? (
+            <button className="btn-product" onClick={removeUserFromProduct}>
+              בטל הצטרפות
+            </button>
+          ) : (
+            <button className="btn-product" onClick={addUserToProduct}>
+              הצטרף כעת להזמנה
+            </button>
+          )}
+          <Link className="link-button" to={`/product/${product._id}`}>
+            Product details
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
