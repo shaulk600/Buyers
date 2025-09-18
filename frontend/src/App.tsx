@@ -37,7 +37,7 @@ function App() {
       <UserProvider>
         <Header />
         <Routes>
-          <Route path="/home" element={<HomePage />}></Route>
+          <Route index element={<HomePage />}></Route>
           <Route path="/signUp" element={<RegisterPage />}></Route>
           <Route path="/signIn" element={<LoginPage />}></Route>
           <Route path="/products" element={ <ProductsPage products={products}/>}></Route>

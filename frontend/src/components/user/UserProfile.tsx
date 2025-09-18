@@ -12,11 +12,13 @@ export default function UserProfile() {
   const handleLogout = () => {
     localStorage.removeItem("BuyersAccessToken");
     setUser(null);
-    navigate('/login');
+    navigate('/signUp');
   }
 
   return (
-    <div>
+    <div className="continer">
+      <div className="page">
+
       <h1>My Profile</h1>
 
       <section>
@@ -59,6 +61,7 @@ export default function UserProfile() {
         ) : <p>No orders yet</p>}
       </section>
       <button onClick={handleLogout}>Logout</button>
+        </div>
     </div>
   );
 }

@@ -3,13 +3,12 @@ import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
 import { useNavigate } from 'react-router';
 import { ubdateToken } from "../../logic/cookies/Token.ts"
-
-
-    
-
+import { useUser } from "../../context/UserContext";
+// import { Link } from 'react-router';
 
 export default function LoginComps() {
-    const contextUser = useContext(UserContext); // שימוש ב-context
+    // const contextUser = useContext(UserContext); // שימוש ב-context
+    const { setUser } = useUser();
     const navigate = useNavigate()
 
 
@@ -61,17 +60,17 @@ export default function LoginComps() {
             if (res.status === 401 && data['token'] === "false") {
                 ubdateToken(data, "BuyersAccessToken");
             }
-            
-            if (data.user && contextUser) {
+            console.log("data", data);
+            if (data.user) {
                 console.log("user from server - show: ", data.user);
 
                 // עדכון ה־ context עם USER
-                contextUser.setUser({
+                setUser({
                     ...data.user,
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
-                navigate('/products')
+                navigate("/products");
             }
 
         } catch (err) {
@@ -99,6 +98,8 @@ export default function LoginComps() {
     }, []);
 
     return (
+    <div className='continer'>
+
         <div className='page'>
             <h2>Welcome Back</h2>
 
@@ -107,38 +108,42 @@ export default function LoginComps() {
 
                     <div>
                         <label>Email:</label>
-                        <input
+                        <br />
+                        <input className='input'
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@example.com"
                             required
-                        />
+                            />
                     </div>
+                    <br />
 
                     <br />
 
                     <div>
                         <label>Password:</label>
-                        <input
+                        <br /> 
+                        <input className='input'
                             type="password"
                             value={password}
                             onChange={(e) => setPass(e.target.value)}
                             placeholder="••••••••"
                             required
-                        />
+                            />
                     </div>
-
-                    <button type='submit'>Sign In</button>
+                        <br /> 
+                    <button  className="btn-green" type='submit'>Sign In</button>
 
                 </form>
             </div>
 
-            <div id='response'>
+            {/* <div id='response'>
                 {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
             </div>
 
-            {token && <p>Token saved: {token}</p>}
+            {token && <p>Token saved: {token}</p>} */}
         </div>
+    </div>
     )
 }
