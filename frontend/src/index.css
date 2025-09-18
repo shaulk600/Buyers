@@ -25,6 +25,7 @@ body {
 }
 
 .page {
+  margin: 50px 0px;
   padding: 50px 5vw;
   justify-items: center;
   align-content: center;
@@ -33,7 +34,6 @@ body {
   border-left: 5px solid rgb(0 255 64);
   border-right: 5px solid rgb(0 255 64);
   box-shadow: 0px 0px 50px 5px rgba(0, 255, 64, 0.2);
-  margin: 5vw 5vw;
   background-color: rgba(255, 255, 255, 0.7);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -48,7 +48,6 @@ body {
   padding: 10px 5vw;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  margin-bottom: 50px;
   background-color: white;
 }
 
@@ -76,9 +75,10 @@ nav {
   padding: 10px 20px;
   background-color: white;
   border-top: 5px solid rgb(0 255 64);
-  border-bottom: 5px solid  rgb(0 79 41);
+  border-bottom: 5px solid rgb(0 79 41);
   border-radius: 25px;
   cursor: pointer;
+  color: rgb(0 79 41);
 }
 
 .btn-green:hover {
@@ -133,5 +133,26 @@ footer {
   border-radius: 25px;
 }
 
+.home-page {
+  display: flex;
+  padding: 0vw 10vw;
+  align-items: center;
+}
 
+.img-home {
+  height: 500px;
+  animation: slide-right 1s ease-out forwards;
+}
+
+
+@keyframes slide-right {
+  from {
+    transform: translateX(200%); /* מתחיל משמאל, מחוץ למסך */
+    opacity: 0;                   /* בהתחלה שקוף */
+  }
+  to {
+    transform: translateX(0);     /* חוזר למקום המקורי */
+    opacity: 1;                   /* בסוף נראה */
+  }
+}
 
