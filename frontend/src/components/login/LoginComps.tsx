@@ -1,16 +1,15 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
-// import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { ubdateToken } from "../../logic/cookies/Token.ts"
-
-
-    
-
+import { useUser } from "../../context/UserContext";
+// import { Link } from 'react-router';
 
 export default function LoginComps() {
-    const contextUser = useContext(UserContext); // שימוש ב-context
-    // const navigate = useNavigate()
+    // const contextUser = useContext(UserContext); // שימוש ב-context
+    const { setUser } = useUser();
+    const navigate = useNavigate()
 
 
     const [password, setPass] = useState<string>("");
@@ -61,17 +60,17 @@ export default function LoginComps() {
             if (res.status === 401 && data['token'] === "false") {
                 ubdateToken(data, "BuyersAccessToken");
             }
-            
-            if (data.user && contextUser) {
+            console.log("data", data);
+            if (data.user) {
                 console.log("user from server - show: ", data.user);
 
                 // עדכון ה־ context עם USER
-                contextUser.setUser({
+                setUser({
                     ...data.user,
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
-                window.location.href = "/products";
+                navigate("/products");
             }
 
         } catch (err) {
@@ -99,7 +98,7 @@ export default function LoginComps() {
     }, []);
 
     return (
-    <div className='login'>
+    <div className='continer'>
 
         <div className='page'>
             <h2>Welcome Back</h2>
@@ -134,17 +133,16 @@ export default function LoginComps() {
                             />
                     </div>
                         <br /> 
-
                     <button  className="btn-green" type='submit'>Sign In</button>
 
                 </form>
             </div>
 
-            <div id='response'>
+            {/* <div id='response'>
                 {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
             </div>
 
-            {token && <p>Token saved: {token}</p>}
+            {token && <p>Token saved: {token}</p>} */}
         </div>
     </div>
     )

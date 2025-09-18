@@ -49,7 +49,7 @@ export default function RegisterComps() {
                     }
 
                     // מעבר לדף מוצרים
-                    window.location.href = "/products";
+                    // window.location.href = "/products";
                 } else {
                     window.alert(":( :( Registration failed: " + (data?.message || "try again"));
                 }
@@ -63,6 +63,8 @@ export default function RegisterComps() {
     };
 
     return (
+        <div className="continer">
+
         <section className="page">
             <h1>{`Register on the site :)`}</h1>
             <br />
@@ -90,5 +92,6 @@ export default function RegisterComps() {
                 <button className="btn-green" type="submit">הירשם</button>
             </form>
         </section>
+        </div>
     );
 }
