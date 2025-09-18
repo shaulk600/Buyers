@@ -23,7 +23,7 @@ export default function Products({ products }: Props) {
   const displayProducts = searchTerm ? filterProducts : products;
 
   return (
-    <div className="comp-products">
+    <div className="page">
       <div>
         <input
           type="text"
@@ -39,12 +39,13 @@ export default function Products({ products }: Props) {
         </button>
         {message && <p>{message}</p>}
       </div>
-
+      <div className="products-galery">
       {displayProducts.map((product) => (
         <div key={product._id}>
           <Product id_product={product._id} />
         </div>
       ))}
+      </div>
     </div>
   );
 }
