@@ -122,10 +122,10 @@ export default function Product({ id_product }: { id_product: string }) {
             <section className="product_details">
                 <h2>{product.title}</h2>
 
-                <div className="divPrice">
-                    <p>{product.regular_price}</p>
-                    <p>{product.group_price}</p>
-                </div>
+                <span className="divPrice">
+                    <p className="price">{product.group_price}$</p>
+                    <p ><s>{product.regular_price}$</s></p>
+                </span>
 
                 <div className="btn_footer">
                     {isOrdered  ? 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../../context/UserContext";
 import "./LoginComps.css";
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import { ubdateToken } from "../../logic/cookies/Token.ts"
 
 
@@ -10,7 +10,7 @@ import { ubdateToken } from "../../logic/cookies/Token.ts"
 
 export default function LoginComps() {
     const contextUser = useContext(UserContext); // שימוש ב-context
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
 
     const [password, setPass] = useState<string>("");
@@ -71,7 +71,7 @@ export default function LoginComps() {
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
-                navigate('/products')
+                window.location.href = "/products";
             }
 
         } catch (err) {
@@ -99,6 +99,8 @@ export default function LoginComps() {
     }, []);
 
     return (
+    <div className='login'>
+
         <div className='page'>
             <h2>Welcome Back</h2>
 
@@ -107,29 +109,33 @@ export default function LoginComps() {
 
                     <div>
                         <label>Email:</label>
-                        <input
+                        <br />
+                        <input className='input'
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@example.com"
                             required
-                        />
+                            />
                     </div>
+                    <br />
 
                     <br />
 
                     <div>
                         <label>Password:</label>
-                        <input
+                        <br /> 
+                        <input className='input'
                             type="password"
                             value={password}
                             onChange={(e) => setPass(e.target.value)}
                             placeholder="••••••••"
                             required
-                        />
+                            />
                     </div>
+                        <br /> 
 
-                    <button type='submit'>Sign In</button>
+                    <button  className="btn-green" type='submit'>Sign In</button>
 
                 </form>
             </div>
@@ -140,5 +146,6 @@ export default function LoginComps() {
 
             {token && <p>Token saved: {token}</p>}
         </div>
+    </div>
     )
 }
