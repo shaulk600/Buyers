@@ -1,50 +1,43 @@
-import { useState, useEffect, useContext } from 'react'
-import { UserContext } from "../../context/UserContext";
+import { useState, useEffect } from 'react';
+import { useUser } from "../../context/UserContext";
 import "./LoginComps.css";
 import { useNavigate } from 'react-router';
-import { saveToken, ubdateToken } from "../../logic/cookies/Token.ts"
-
-
-
-
+import { saveToken, ubdateToken } from "../../logic/cookies/Token.ts";
 
 export default function LoginComps() {
-    const contextUser = useContext(UserContext); // שימוש ב-context
-    const navigate = useNavigate()
-
+    const { setUser } = useUser();
+    const navigate = useNavigate();
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
 
-    const [result, setResult] = useState<any>(null);
     const [token, setToken] = useState<string | null>(null);
 
-    //send login
+    // שליחת פרטי התחברות
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         try {
             const res = await fetch(`http://localhost:3000/access/login`, {
                 method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
             });
 
             const data = await res.json();
-            setResult(data);
 
             if (data?.token) {
                 localStorage.setItem("BuyersAccessToken", data.token);
                 setToken(data.token);
+            } else {
+                alert("Login failed: " + (data.error || "Unknown error"));
             }
         } catch (err) {
-            console.error("Login error function handleSubmit:", err);
-            setResult({ error: "Server error, please try again" });
+            console.error("Login error:", err);
+            alert("Server error, please try again");
         }
     }
 
-    //get user from Server
+    // שליפת המשתמש מהשרת
     const getUserFromServer = async (myToken: string) => {
         try {
             const res = await fetch(`http://localhost:3000/buyers/users/data`, {
@@ -57,57 +50,41 @@ export default function LoginComps() {
 
             const data = await res.json();
 
-            // טוקן חוזר לא תקין
-            // לא עובד - למה ??????
             if (res.status === 401 && data['token'] === "false") {
                 ubdateToken(data, "BuyersAccessToken");
+                return;
             }
 
-            if (data.user && contextUser) {
-                console.log("user from server - show: ", data.user);
-
+            if (data.user) {
                 saveToken("BuyersUser", JSON.stringify(data.user));
-                // // עדכון ה־ context עם USER
-                // contextUser.setUser({
-                //     ...data.user,
-                //     orders: data.orders || [],
-                //     groups: data.groups || [],
-                // });
-                // console.log('contextUser.user  is : ', contextUser.user)
-                // navigate('/products')
+                setUser({
+                    ...data.user,
+                    orders: data.orders || [],
+                    groups: data.groups || [],
+                });
+                navigate('/');
             }
-
         } catch (err) {
-            console.log('Error function getUserFromServer: ', err);
+            console.log('Error fetching user data: ', err);
         }
-    }
+    };
 
-    // if new token..
+    // ברגע שיש token → מביאים משתמש
     useEffect(() => {
-        const fetchUser = async () => {
-            if (token) {
-                await getUserFromServer(token);
-            }
-        }
-        fetchUser();
+        if (token) getUserFromServer(token);
     }, [token]);
 
-    // if token in LocalStorage..
+    // אם כבר יש token בשמירה מקומית
     useEffect(() => {
-        // בדיקה אם כבר יש token 
         const savedToken = localStorage.getItem("BuyersAccessToken");
-        if (savedToken) {
-            setToken(savedToken);
-        }
+        if (savedToken) setToken(savedToken);
     }, []);
 
     return (
         <div className='page'>
             <h2>Welcome Back</h2>
-
             <div id='loginContext'>
                 <form onSubmit={handleSubmit}>
-
                     <div>
                         <label>Email:</label>
                         <input
@@ -118,9 +95,7 @@ export default function LoginComps() {
                             required
                         />
                     </div>
-
                     <br />
-
                     <div>
                         <label>Password:</label>
                         <input
@@ -131,17 +106,9 @@ export default function LoginComps() {
                             required
                         />
                     </div>
-
                     <button type='submit'>Sign In</button>
-
                 </form>
             </div>
-
-            <div id='response'>
-                {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
-            </div>
-
-            {token && <p>Token saved: {token}</p>}
         </div>
-    )
+    );
 }

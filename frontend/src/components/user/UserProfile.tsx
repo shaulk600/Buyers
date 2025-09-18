@@ -1,12 +1,10 @@
-// src/components/user/UserProfile.tsx
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { type UserFull, useUser } from "../../context/UserContext";
 import { getToken, ubdateToken } from "../../logic/cookies/Token";
 
 export default function UserProfile() {
   const { user, setUser } = useUser();
-  const [userLocalStorage, setUserLocalStorage] = useState<UserFull | null>(null);
   const navigate = useNavigate();
 
   if (!user) return <p>Loading user data...</p>;
@@ -16,13 +14,21 @@ export default function UserProfile() {
     setUser(null);
     ubdateToken({ token: "false" }, "BuyersUser");
     navigate('/login');
-  }
+  };
 
   useEffect(() => {
-    const data = JSON.parse(getToken("BuyersUser") || "{}");
-    setUserLocalStorage(data);
-    setUser(data);
-  }, []);
+    try {
+      const raw = getToken("BuyersUser");
+      if (raw) {
+        const parsed: UserFull = JSON.parse(raw);
+        if (parsed && parsed._id) {
+          setUser(parsed);
+        }
+      }
+    } catch (err) {
+      console.error("Failed parsing BuyersUser:", err);
+    }
+  }, [setUser]);
 
   return (
     <div>
@@ -38,14 +44,14 @@ export default function UserProfile() {
 
       <section>
         <h2>My Groups</h2>
-        {user.groups.length > 0 ? (
+        {user.groups?.length > 0 ? (
           <ul>{user.groups.map((g) => <li key={g.id}>{g.name}</li>)}</ul>
         ) : <p>No groups yet</p>}
       </section>
 
       <section>
         <h2>My Orders</h2>
-        {user.orders.length > 0 ? (
+        {user.orders?.length > 0 ? (
           <table border={1} cellPadding={8}>
             <thead>
               <tr>
@@ -61,12 +67,14 @@ export default function UserProfile() {
                   <td>{o.productName}</td>
                   <td>{o.date}</td>
                   <td>{o.status}</td>
+                  <td>{o.status}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         ) : <p>No orders yet</p>}
       </section>
+
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

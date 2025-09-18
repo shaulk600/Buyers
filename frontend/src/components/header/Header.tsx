@@ -1,24 +1,25 @@
 import { Link } from "react-router";
 import './Header.css';
-import { UserContext } from '../../context/UserContext'
-import { useContext, useEffect, useState } from "react";
+import { useUser } from '../../context/UserContext';
+import { useEffect } from "react";
 import { getToken } from "../../logic/cookies/Token";
 
 export default function Header() {
-  const user = useContext(UserContext); //שישאר בשביל orders -אין לו גישה לא ל user ולא ל setUser
-  const [userLocalStorage, setUserLocalStorage] = useState("")
+  const { user, setUser } = useUser();
+
   useEffect(() => {
-    setUserLocalStorage(getToken("BuyersUser"));
-  }, [])
-
-  // useEffect(() => {
-  //   const data = JSON.parse(getToken("BuyersUser") || "{}");
-  //   if (data['_id']) {
-  //     setUserLocalStorage(data);
-  //     user?.setUser(data);
-  //   }
-
-  // }, []);
+    try {
+      const raw = getToken("BuyersUser");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed._id) {
+          setUser(parsed);
+        }
+      }
+    } catch (err) {
+      console.error("Failed parsing BuyersUser:", err);
+    }
+  }, [setUser]);
 
   return (
     <header id="HeaderComps">
@@ -29,19 +30,17 @@ export default function Header() {
         <Link to="/home" className="link">Home</Link>
         <Link to="/products" className="link">Products</Link>
       </nav>
-      {
-        userLocalStorage || user?.user? (
-          <Link to="/profile">
-            <img id="profile-img" src="/profile.svg" alt="logo-buyers" />
-            Profile
-          </Link>
-        ) : (
-          <span className="btn">
-            <Link to="/signIn"><button className="btn-green">Sign In</button></Link>
-            <Link to="/signUp"><button className="btn-green">Sign Up</button></Link>
-          </span>
-        )
-      }
+      {user ? (
+        <Link to="/profile" className="profile-link">
+          <img id="profile-img" src="/profile.svg" alt="profile" />
+          Profile
+        </Link>
+      ) : (
+        <span className="btn">
+          <Link to="/signIn"><button className="btn-green">Sign In</button></Link>
+          <Link to="/signUp"><button className="btn-green">Sign Up</button></Link>
+        </span>
+      )}
     </header>
   );
 }
