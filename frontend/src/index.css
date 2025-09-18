@@ -73,24 +73,23 @@ nav {
 }
 
 .btn-green {
-  background: linear-gradient(to top, rgb(0 79 41), rgb(0 255 64));
-  border: 2px solid  rgb(0 79 41);
   padding: 10px 20px;
-  color: white;
-  font-weight: 600;
+  background-color: white;
+  border-top: 5px solid rgb(0 255 64);
+  border-bottom: 5px solid  rgb(0 79 41);
   border-radius: 25px;
   cursor: pointer;
 }
 
 .btn-green:hover {
   background-color: rgb(0 255 64);
-  border: 1px solid rgb(0 79 41);
+  border: 5px solid rgb(0 79 41);
   color: rgb(0 79 41);
 }
 
 .products-galery {
   display: flex;
-  gap: 20px;
+  gap: 50px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -118,6 +117,20 @@ footer {
   display: flex;
   gap: 30px;
   padding: 0px 5vw;
+}
+
+.btns-category {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category {
+  padding: 10px 20px;
+  background-color: white;
+  border-top: 5px solid rgb(0 255 64);
+  border-bottom: 5px solid  rgb(0 79 41);
+  border-radius: 25px;
 }
 
 
