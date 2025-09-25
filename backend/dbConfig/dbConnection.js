@@ -18,7 +18,7 @@ export async function connectToPurchasingGroupsDB() {
         try {
             await client.connect();
 
-            db = client.db("purchasing_groups");
+            db = client.db("Buyers-Web");
             console.log("Connected to MongoDB");
         } catch (err) {
             console.error("Error connecting to MongoDB:", err.message);
