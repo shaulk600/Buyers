@@ -39,13 +39,18 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/home" element={<HomePage />}></Route>
+          {/* <Route index element={<HomePage />}></Route> */}
+
           <Route path="/signUp" element={<RegisterPage />}></Route>
           <Route path="/signIn" element={<LoginPage />}></Route>
+
           <Route path="/products" element={ <ProductsPage products={products}/>}></Route>
           <Route path="/product/:id" element={<ProductDinamicPage />}></Route>
+
           <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
           <Route path="/contactUs" element={<ContactUsPage />}></Route>
+          
           <Route path="/profile" element={<UserProfilePage />}></Route>
         </Routes>
         <Footer />

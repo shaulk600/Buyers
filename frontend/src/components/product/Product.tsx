@@ -135,6 +135,7 @@ export default function Product({ id_product }: { id_product: string }) {
           <p>Group Price: {product.group_price}₪</p>
         </div>
 
+<<<<<<< HEAD
         <div className="btn_footer">
           {isOrdered ? (
             <button className="btn-product" onClick={removeUserFromProduct}>
@@ -150,6 +151,34 @@ export default function Product({ id_product }: { id_product: string }) {
           </Link>
         </div>
       </section>
+=======
+            <section className="product_details">
+                <h2>{product.title}</h2>
+
+                <span className="divPrice">
+                    <p className="price">{product.group_price}$</p>
+                    <p ><s>{product.regular_price}$</s></p>
+                </span>
+
+                <div className="btn_footer">
+                    {isOrdered  ? 
+                        (<button className="btn-product"
+                            onClick={removeUserFromProduct}
+                        >
+                             בטל הצטרפות
+                        </button>
+                        ): (
+                        <button className="btn-product"
+                            onClick={addUserToProduct}
+                        >
+                            הצטרף כעת להזמנה
+                        </button>
+                        )
+                    }
+                    <Link className="link-button" to={`/product/${product._id}`}>Product details</Link>
+                </div>
+            </section>
+>>>>>>> 79b6e7ebad0fafe28468ebce7bd4adbdc33ef63c
     </div>
   );
 }

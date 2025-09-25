@@ -31,7 +31,9 @@ export default function UserProfile() {
   }, [setUser]);
 
   return (
-    <div>
+    <div className="continer">
+      <div className="page">
+
       <h1>My Profile</h1>
 
       <section>
@@ -67,7 +69,7 @@ export default function UserProfile() {
                   <td>{o.productName}</td>
                   <td>{o.date}</td>
                   <td>{o.status}</td>
-                  <td>{o.status}</td>
+                  
                 </tr>
               ))}
             </tbody>
@@ -76,6 +78,7 @@ export default function UserProfile() {
       </section>
 
       <button onClick={handleLogout}>Logout</button>
+        </div>
     </div>
   );
 }

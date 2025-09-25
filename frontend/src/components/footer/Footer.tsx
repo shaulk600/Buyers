@@ -3,10 +3,9 @@ import { Link } from 'react-router'
 export default function Footer() {
   return (
     <footer>
-      <nav>
-        <Link to="/about">About</Link>
-        <Link to="/contactUs">Contact us</Link>
-      </nav>
+        <Link to="/about"><button className='btn-green'>About</button></Link>
+        <p>Create by grop 1</p>
+        <Link to="/contactUs"><button className='btn-green'>Contact us</button></Link>
     </footer>
   )
 }

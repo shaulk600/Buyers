@@ -16,7 +16,7 @@ export default function Categories({ onSelectCategory, categories }: CategoriesP
   return (
     <div className="btns-category">
       {categories.map((cat) => (
-        <button className="category" key={cat} onClick={() => handleSelect(cat)}>
+        <button className="btn-green" key={cat} onClick={() => handleSelect(cat)}>
           {cat}
         </button>
       ))}

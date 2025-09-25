@@ -1,19 +1,25 @@
-import { useState, useEffect } from 'react';
-import { useUser } from "../../context/UserContext";
+import { useState, useEffect, useContext } from 'react';
+import { UserContext, useUser } from "../../context/UserContext";
 import "./LoginComps.css";
 import { useNavigate } from 'react-router';
 import { saveToken, ubdateToken } from "../../logic/cookies/Token.ts";
+// import { Link } from 'react-router';
+
+
+
 
 export default function LoginComps() {
+    // const contextUser = useContext(UserContext); // שימוש ב-context
     const { setUser } = useUser();
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
 
     const [password, setPass] = useState<string>("");
     const [email, setEmail] = useState<string>("");
 
     const [token, setToken] = useState<string | null>(null);
 
-    // שליחת פרטי התחברות
+    //send login
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         try {
@@ -37,7 +43,7 @@ export default function LoginComps() {
         }
     }
 
-    // שליפת המשתמש מהשרת
+    //get user from Server
     const getUserFromServer = async (myToken: string) => {
         try {
             const res = await fetch(`http://localhost:3000/buyers/users/data`, {
@@ -54,61 +60,89 @@ export default function LoginComps() {
                 ubdateToken(data, "BuyersAccessToken");
                 return;
             }
-
+            console.log("data", data);
             if (data.user) {
                 saveToken("BuyersUser", JSON.stringify(data.user));
+                console.log("user from server - show: ", data.user);
+
+                // עדכון ה־ context עם USER
                 setUser({
                     ...data.user,
                     orders: data.orders || [],
                     groups: data.groups || [],
                 });
-                navigate('/');
+                navigate("/products");
             }
         } catch (err) {
             console.log('Error fetching user data: ', err);
         }
     };
 
-    // ברגע שיש token → מביאים משתמש
+    // if new token..
     useEffect(() => {
-        if (token) getUserFromServer(token);
+        const fetchUser = async () => {
+            if (token) {
+                await getUserFromServer(token);
+            }
+        }
+        fetchUser();
     }, [token]);
 
-    // אם כבר יש token בשמירה מקומית
+    // if token in LocalStorage..
     useEffect(() => {
         const savedToken = localStorage.getItem("BuyersAccessToken");
         if (savedToken) setToken(savedToken);
     }, []);
 
     return (
-        <div className='page'>
-            <h2>Welcome Back</h2>
-            <div id='loginContext'>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="you@example.com"
-                            required
-                        />
-                    </div>
-                    <br />
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPass(e.target.value)}
-                            placeholder="••••••••"
-                            required
-                        />
-                    </div>
-                    <button type='submit'>Sign In</button>
-                </form>
+        <div className='continer'>
+
+            <div className='page'>
+                <h2>Welcome Back</h2>
+                
+                <div id='loginContext'>
+                    <form onSubmit={handleSubmit}>
+                        
+                        <div>
+                            <label>Email:</label>
+                            <br />
+                            <input className='input'
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@example.com"
+                                required
+                            />
+                        </div>
+                        
+                        <br />
+                        <br />
+                        
+                        <div>
+                            <label>Password:</label>
+                            <br />
+                            <input className='input'
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPass(e.target.value)}
+                                placeholder="••••••••"
+                                required
+                            />
+                        </div>
+                        
+                        <br />
+                        
+                        <button className="btn-green" type='submit'>Sign In</button>
+
+                    </form>
+                </div>
+
+                {/* <div id='response'>
+                {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+            </div>
+
+            {token && <p>Token saved: {token}</p>} */}
             </div>
         </div>
-    );
+    )
 }

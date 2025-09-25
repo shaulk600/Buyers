@@ -24,8 +24,8 @@ export default function Products({ products }: Props) {
 
   return (
     <div className="page">
-      <div>
-        <input
+      <div className="search">
+        <input className="search-input"
           type="text"
           placeholder="Search product..."
           value={searchTerm}
@@ -34,7 +34,7 @@ export default function Products({ products }: Props) {
             setSearchTerm(e.target.value);
           }}
         />
-        <button type="button" onClick={search}>
+        <button className="btn-green" type="button" onClick={search}>
           Search
         </button>
         {message && <p>{message}</p>}
